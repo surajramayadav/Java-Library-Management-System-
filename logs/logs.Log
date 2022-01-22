@@ -1,0 +1,3 @@
+2022-01-22 20:43:50,150 ERROR l.a.s.WelcomeAdmin [main] java.util.NoSuchElementException
+2022-01-22 23:11:57,269 ERROR l.a.Admin [main] You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'INT `admin` ( `admin_username`, `admin_password`, `admin_role`) VALUES('admin','' at line 1
+2022-01-22 23:12:48,104 ERROR l.a.Admin [main] You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'INT `admin` ( `admin_username`, `admin_password`, `admin_role`) VALUES('admin','' at line 1
