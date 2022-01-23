@@ -14,18 +14,25 @@ public class AdminSwitch {
 	static Logger log = null;
 	PrintStatement ps = null;
 	ClearConsole clearConsole = null;
-	Admin admin =null;
+	Admin admin = null;
+	String admin_username = null;
+	String admin_password = null;
+	String admin_role = null;
+	int admin_id = 0 ;
+	ScannerInput sc=null;
+
 	public AdminSwitch() {
-		 admin=new Admin();
+		admin = new Admin();
+		log = LogManager.getLogger(AdminSwitch.class.getName());
+		 sc = new ScannerInput();
+		 ps = new PrintStatement();
 	}
-	
+
 	public void adminSwitch() {
 		try {
-			log = LogManager.getLogger(AdminSwitch.class.getName());
+			
 			clearConsole = new ClearConsole();
-			ScannerInput sc = new ScannerInput();
-			ps = new PrintStatement();
-//			clearConsole.clearConsole();
+		
 			ps.printData("Admin");
 			ps.printData("1) Search");
 			ps.printData("2) Add");
@@ -35,31 +42,46 @@ public class AdminSwitch {
 			ps.printData("6) Back");
 			ps.printData("7) Exit");
 
-			int adminOption=ps.printIntOption();
+			int adminOption = ps.printIntOption();
 			switch (adminOption) {
 			case 1:
-				ps.printData("1st");
+				admin_username = sc.getStringInput("Enter Admin UserName : ");
+				admin.adminSearch(admin_username);
+				ps.printData("");
+				adminSwitch();
 				break;
 			case 2:
-				String admin_username =sc.getStringInput("Enter Admin User Name : ");
-				String admin_password =sc.getStringInput("Enter Admin Password : ");
-				String admin_role =sc.getStringInput("Enter Admin Role : ");
-				if(admin.adminAdd(admin_username, admin_password, admin_role)) {
+				admin_username = sc.getStringInput("Enter Admin UserName : ");
+				admin_password = sc.getStringInput("Enter Admin Password : ");
+				admin_role = sc.getStringInput("Enter Admin Role : ");
+				if (admin.adminAdd(admin_username, admin_password, admin_role)) {
 					ps.printData("Admin Added Successfully");
 					adminSwitch();
-				}else {
+				} else {
 					ps.printData("Something Went Wrong !!!");
 					adminSwitch();
 				}
 				break;
 			case 3:
-				ps.printData("1 st");
+				admin.adminView();
+				ps.printData("");
+				adminSwitch();
 				break;
 			case 4:
-				ps.printData("1 st");
+				adminUpdateSwitch();
 				break;
 			case 5:
-				ps.printData("1 st");
+				admin_username = sc.getStringInput("Enter Admin UserName : ");
+				admin.adminSearch(admin_username);
+				ps.printData("");
+				admin_id = sc.getIntInput("Enter Admin User Id : ");
+				if (admin.adminDelete(admin_id)) {
+					ps.printData("Admin Deleted Successfully");
+					adminSwitch();
+				} else {
+					ps.printData("Something Went Wrong !!!");
+					adminSwitch();
+				}
 				break;
 			case 6:
 				clearConsole.clearConsole();
@@ -87,5 +109,88 @@ public class AdminSwitch {
 			log.error(e);
 			adminSwitch();
 		}
+	}
+	
+	public void adminUpdateSwitch() {
+		
+		try {
+			ps.printData("Admin Update");
+			ps.printData("1) Change Username");
+			ps.printData("2) Change Password");
+			ps.printData("3) Change Role");
+			ps.printData("4) Back");
+			ps.printData("5) Exit");
+			
+			int adminOption = ps.printIntOption();
+			switch (adminOption) {
+			case 1:
+				admin_username = sc.getStringInput("Enter Admin Current UserName : ");
+				admin.adminSearch(admin_username);
+				ps.printData("");
+				admin_id = sc.getIntInput("Enter Admin Id : ");
+				admin_username = sc.getStringInput("Enter Admin New UserName : ");
+				if(admin.adminUserNameUpdate(admin_id, admin_username)) {
+					ps.printData("Admin UserName Updated Successfully");
+				}else {
+					ps.printData("Something Went Wrong !!!");
+				}
+				
+				adminUpdateSwitch();
+				break;
+			case 2:
+				admin_username = sc.getStringInput("Enter Admin Current UserName : ");
+				admin.adminSearch(admin_username);
+				ps.printData("");
+				admin_id = sc.getIntInput("Enter Admin Id : ");
+				admin_password = sc.getStringInput("Enter Admin New Password : ");
+				if(admin.adminPasswordUpdate(admin_id, admin_password)) {
+					ps.printData("Admin Password Updated Successfully");
+				}else {
+					ps.printData("Something Went Wrong !!!");
+				}
+				
+				adminUpdateSwitch();
+				break;
+			case 3:
+				admin_username = sc.getStringInput("Enter Admin Current UserName : ");
+				admin.adminSearch(admin_username);
+				ps.printData("");
+				admin_id = sc.getIntInput("Enter Admin Id : ");
+				admin_role = sc.getStringInput("Enter Admin New Role : ");
+				if(admin.adminRoleUpdate(admin_id, admin_role)) {
+					ps.printData("Admin Role Updated Successfully");
+				}else {
+					ps.printData("Something Went Wrong !!!");
+				}
+				
+				adminUpdateSwitch();
+				break;
+			
+			case 4:
+				clearConsole.clearConsole();
+				adminSwitch();
+				break;
+			case 5:
+				clearConsole.clearConsole();
+				ps.printExit();
+				System.exit(0);
+				break;
+
+			default:
+				clearConsole.clearConsole();
+				ps.printOptionErr();
+				adminUpdateSwitch();
+				break;
+			}
+		} catch (InputMismatchException ex) {
+			// TODO: handle exception
+			ps.printData("Wrong Option is entered");
+			adminSwitch();
+		} catch (Exception e) {
+			// TODO: handle exception
+			log.error(e);
+			adminSwitch();
+		}
+		
 	}
 }

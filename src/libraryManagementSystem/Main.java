@@ -1,5 +1,6 @@
 package libraryManagementSystem;
 
+import libraryManagementSystem.admin.Admin;
 import libraryManagementSystem.admin.switchstatement.AdminHome;
 import libraryManagementSystem.database.DatabaseHelper;
 import libraryManagementSystem.utils.PrintStatement;
@@ -18,6 +19,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		try {
+			
 			log = LogManager.getLogger(Main.class.getName());
 			LoginSwitch adminLogin = new LoginSwitch();
 			adminLogin.adminWelcomeLoginSwitch();

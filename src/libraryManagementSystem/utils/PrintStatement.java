@@ -33,6 +33,8 @@ public class PrintStatement {
 		return rootOption;
 	}
 	
-
+	public void printDataWithoutLN(String msg) {
+		System.out.print(msg);
+	}
 
 }

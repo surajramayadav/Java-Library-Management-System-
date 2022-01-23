@@ -1,5 +1,8 @@
 package libraryManagementSystem.admin;
 
-public class Book {
+public interface Book extends Genre{
 
+	default void test3() {
+		System.out.print("book");
+	}
 }

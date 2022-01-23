@@ -1,5 +1,8 @@
 package libraryManagementSystem.admin;
 
-public class IssuedBook {
+public interface IssuedBook {
+	default void test4() {
+		System.out.print("IssuedBook");
+	}
 
 }

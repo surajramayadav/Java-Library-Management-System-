@@ -47,7 +47,6 @@ public class LoginSwitch {
 				Admin admin=new Admin();
 				String result = admin.adminLogin(adminUserName, adminPassword);
 				if(result.equals("true")) {
-					
 					clearConsole.clearConsole();
 					wa.adminHomeSwitch();
 				}else {
