@@ -9,13 +9,14 @@ import libraryManagementSystem.LoginSwitch;
 import libraryManagementSystem.database.DatabaseHelper;
 import libraryManagementSystem.utils.PrintStatement;
 
-public class Admin implements Book,IssuedBook {
+public class Admin implements Book,IssuedBook,User {
 	static Logger log = null;
 	PrintStatement ps = null;
 	Connection connection = null;
 	ResultSet resultSet = null;
 	PreparedStatement preparedStatement = null;
 	Statement statement;
+	
 
 	public Admin() {
 		try {
@@ -43,7 +44,7 @@ public class Admin implements Book,IssuedBook {
 
 			if (resultSet.next()) {
 //				System.out.print("success");
-				return "true";
+				return String.valueOf(resultSet.getInt(1));
 			} else {
 //				System.out.print("failed");
 				return "false";
@@ -148,7 +149,7 @@ public class Admin implements Book,IssuedBook {
 
 	}
 
-	public Boolean adminUserNameUpdate(int admin_id, String admin_username) {
+	public boolean adminUserNameUpdate(int admin_id, String admin_username) {
 		boolean flag = false;
 		try {
 			String sql = "update admin set admin_username='" + admin_username + "' where admin_id=" + admin_id + "; ";
@@ -165,7 +166,7 @@ public class Admin implements Book,IssuedBook {
 		return flag;
 	}
 
-	public Boolean adminPasswordUpdate(int admin_id, String admin_password) {
+	public boolean adminPasswordUpdate(int admin_id, String admin_password) {
 		boolean flag = false;
 		try {
 			String sql = "update admin set admin_password='" + admin_password + "' where admin_id=" + admin_id + "; ";
@@ -182,7 +183,7 @@ public class Admin implements Book,IssuedBook {
 		return flag;
 	}
 
-	public Boolean adminRoleUpdate(int admin_id, String admin_role) {
+	public boolean adminRoleUpdate(int admin_id, String admin_role) {
 		boolean flag = false;
 		try {
 			String sql = "update admin set admin_role='" + admin_role + "' where admin_id=" + admin_id + "; ";
@@ -199,4 +200,32 @@ public class Admin implements Book,IssuedBook {
 		return flag;
 	}
 
+
+	public String getSuperAdminInfo(int admin_id) {
+
+		String sql = "select admin_role from admin where admin_id=?";
+		try {
+
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, admin_id);
+			resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next()) {
+//				System.out.print("success");
+				return resultSet.getString(1);
+			} else {
+//				System.out.print("failed");
+				return "false";
+			}
+
+		} catch (SQLException e) {
+//			e.printStackTrace();
+			log.error(e.getMessage());
+		} catch (Exception ex) {
+//			e.printStackTrace();
+			log.error(ex.getMessage());
+		}
+		System.out.print("error");
+		return "error";
+	}
 }

@@ -6,7 +6,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import libraryManagementSystem.admin.Admin;
+import libraryManagementSystem.utils.FileReadAndWrite;
 import libraryManagementSystem.admin.switchstatement.AdminHome;
+import libraryManagementSystem.user.User;
 import libraryManagementSystem.user.switchstatement.UserSwitch;
 import libraryManagementSystem.utils.ClearConsole;
 import libraryManagementSystem.utils.PrintStatement;
@@ -16,7 +18,7 @@ public class LoginSwitch {
 	static Logger log = null;
 	PrintStatement ps = null;
 	ClearConsole clearConsole = null;
-
+	
 	public void adminWelcomeLoginSwitch() {
 		try {
 			clearConsole = new ClearConsole();
@@ -27,6 +29,7 @@ public class LoginSwitch {
 			ps = new PrintStatement();
 			// After Admin Loggin Screen
 			AdminHome wa = new AdminHome();
+			UserSwitch us=new UserSwitch();
 //			clearConsole.clearConsole();
 			ps.printData("Welcome Library management system");
 			ps.printData(" 1) Admin Login ");
@@ -46,16 +49,35 @@ public class LoginSwitch {
 				
 				Admin admin=new Admin();
 				String result = admin.adminLogin(adminUserName, adminPassword);
-				if(result.equals("true")) {
-					clearConsole.clearConsole();
-					wa.adminHomeSwitch();
-				}else {
+				
+				if(result.equals("false")) {
 					ps.printData("Username and Password is incorrect. please try again !!!");
 					adminWelcomeLoginSwitch();
+					
+				}else {
+					clearConsole.clearConsole();
+					FileReadAndWrite fileReadAndWrite=new FileReadAndWrite();
+					fileReadAndWrite.adminWriteId(result);
+					wa.adminHomeSwitch();
 				}
 				break;
 			case 2:
-				clearConsole.clearConsole();
+//				clearConsole.clearConsole();
+				ps.printData("User Login");
+				String UserName = sc.getStringInput("Enter Phone Number : ");
+				String Password = sc.getStringInput("Enter Password : ");
+				User user=new User();
+				String user_id = user.userLogin(UserName, Password);
+				if(user_id.equals("false")) {
+					ps.printData("Username and Password is incorrect. please try again !!!");
+					adminWelcomeLoginSwitch();
+					
+				}else {
+					clearConsole.clearConsole();
+					FileReadAndWrite fileReadAndWrite=new FileReadAndWrite();
+					fileReadAndWrite.userWriteId(user_id);
+					us.userSwitch();
+				}
 				UserSwitch userSwitch =new UserSwitch();
 				clearConsole.clearConsole();
 				userSwitch.userSwitch();

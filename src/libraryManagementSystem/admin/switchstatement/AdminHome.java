@@ -6,7 +6,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import libraryManagementSystem.LoginSwitch;
+import libraryManagementSystem.admin.Admin;
 import libraryManagementSystem.utils.ClearConsole;
+import libraryManagementSystem.utils.FileReadAndWrite;
 import libraryManagementSystem.utils.PrintStatement;
 import libraryManagementSystem.utils.ScannerInput;
 
@@ -14,6 +16,9 @@ public class AdminHome {
 	static Logger log = null;
 	PrintStatement ps = null;
 	ClearConsole clearConsole = null;
+	int admin_id = 0;
+	boolean superAdmin = false;
+
 
 	public void adminHomeSwitch() {
 
@@ -22,64 +27,135 @@ public class AdminHome {
 			clearConsole = new ClearConsole();
 			ScannerInput sc = new ScannerInput();
 			ps = new PrintStatement();
-//			clearConsole.clearConsole();
-			ps.printData("Welcome Admin");
-			ps.printData("1) Issue Book");
-			ps.printData("2) User");
-			ps.printData("3) Book");
-			ps.printData("4) Admin ");
-			ps.printData("5) Report");
-			ps.printData("6) Back");
-			ps.printData("7) Exit");
-
-			int adminOption = ps.printIntOption();
-			switch (adminOption) {
-			case 1:
-//				clearConsole.clearConsole();
-				AdminIssueBookSwitch issueBook = new AdminIssueBookSwitch();
-				clearConsole.clearConsole();
-				issueBook.adminIssueABookedSwitch();
-				break;
-			case 2:
-//				clearConsole.clearConsole();
-				AdminUserSwitch userSwitch =new AdminUserSwitch();
-				clearConsole.clearConsole();
-				userSwitch.adminUserSwitch();
-				break;
-			case 3:
-//				clearConsole.clearConsole();
-				AdminBookSwitch bookAdminSwitch =new AdminBookSwitch();
-				clearConsole.clearConsole();
-				bookAdminSwitch.adminBookSwitch();
-				break;
-			case 4:
-//				clearConsole.clearConsole();
-				AdminSwitch adminSwitch =new AdminSwitch();
-				clearConsole.clearConsole();
-				adminSwitch.adminSwitch();
-				break;
-			case 5:
-				clearConsole.clearConsole();
-				ps.printData("Report");
-				break;
-			case 6:
-				clearConsole.clearConsole();
-				LoginSwitch adminLogin = new LoginSwitch();
-				clearConsole.clearConsole();
-				adminLogin.adminWelcomeLoginSwitch();
-				break;
-			case 7:
-				clearConsole.clearConsole();
-				ps.printExit();
-				System.exit(0);
-				break;
-
-			default:
-				clearConsole.clearConsole();
-				ps.printOptionErr();
-				adminHomeSwitch();
-				break;
+			FileReadAndWrite fileReadAndWrite = new FileReadAndWrite();
+			admin_id = Integer.parseInt(fileReadAndWrite.adminReadId());
+			Admin admin = new Admin();
+			String result = admin.getSuperAdminInfo(admin_id);
+			if (result.equals("false")) {
+				ps.printData("SomeThing Went Wrong ");
+			} else {
+				if (result.equals("super")) {
+					superAdmin = true;
+				} else {
+					superAdmin = false;
+				}
 			}
+			
+			if(superAdmin) {
+				ps.printData("Welcome Admin");
+				ps.printData("1) Issue Book");
+				ps.printData("2) User");
+				ps.printData("3) Book");
+				ps.printData("4) Admin ");
+				ps.printData("5) Report");
+				ps.printData("6) Back");
+				ps.printData("7) Exit");
+			}else {
+				ps.printData("Welcome Admin");
+				ps.printData("1) Issue Book");
+				ps.printData("2) User");
+				ps.printData("3) Book");
+				ps.printData("4) Report");
+				ps.printData("5) Back");
+				ps.printData("6) Exit");
+			}
+//			clearConsole.clearConsole();
+			
+
+			
+			int adminOption = ps.printIntOption();
+			if(superAdmin) {
+				switch (adminOption) {
+				case 1:
+//					clearConsole.clearConsole();
+					AdminIssueBookSwitch issueBook = new AdminIssueBookSwitch();
+					clearConsole.clearConsole();
+					issueBook.adminIssueABookedSwitch();
+					break;
+				case 2:
+//					clearConsole.clearConsole();
+					AdminUserSwitch userSwitch = new AdminUserSwitch();
+					clearConsole.clearConsole();
+					userSwitch.adminUserSwitch();
+					break;
+				case 3:
+//					clearConsole.clearConsole();
+					AdminBookSwitch bookAdminSwitch = new AdminBookSwitch();
+					clearConsole.clearConsole();
+					bookAdminSwitch.adminBookSwitch();
+					break;
+				case 4:
+//					clearConsole.clearConsole();
+					AdminSwitch adminSwitch = new AdminSwitch();
+					clearConsole.clearConsole();
+					adminSwitch.adminSwitch();
+					break;
+				case 5:
+					clearConsole.clearConsole();
+					ps.printData("Report");
+					break;
+				case 6:
+					clearConsole.clearConsole();
+					LoginSwitch adminLogin = new LoginSwitch();
+					clearConsole.clearConsole();
+					adminLogin.adminWelcomeLoginSwitch();
+					break;
+				case 7:
+					clearConsole.clearConsole();
+					ps.printExit();
+					System.exit(0);
+					break;
+
+				default:
+					clearConsole.clearConsole();
+					ps.printOptionErr();
+					adminHomeSwitch();
+					break;
+				}
+			}else {
+				switch (adminOption) {
+				case 1:
+//					clearConsole.clearConsole();
+					AdminIssueBookSwitch issueBook = new AdminIssueBookSwitch();
+					clearConsole.clearConsole();
+					issueBook.adminIssueABookedSwitch();
+					break;
+				case 2:
+//					clearConsole.clearConsole();
+					AdminUserSwitch userSwitch = new AdminUserSwitch();
+					clearConsole.clearConsole();
+					userSwitch.adminUserSwitch();
+					break;
+				case 3:
+//					clearConsole.clearConsole();
+					AdminBookSwitch bookAdminSwitch = new AdminBookSwitch();
+					clearConsole.clearConsole();
+					bookAdminSwitch.adminBookSwitch();
+					break;
+				case 4:
+					clearConsole.clearConsole();
+					ps.printData("Report");
+					break;
+				case 5:
+					clearConsole.clearConsole();
+					LoginSwitch adminLogin = new LoginSwitch();
+					clearConsole.clearConsole();
+					adminLogin.adminWelcomeLoginSwitch();
+					break;
+				case 6:
+					clearConsole.clearConsole();
+					ps.printExit();
+					System.exit(0);
+					break;
+
+				default:
+					clearConsole.clearConsole();
+					ps.printOptionErr();
+					adminHomeSwitch();
+					break;
+				}
+			}
+			
 		} catch (InputMismatchException ex) {
 			// TODO: handle exception
 //			clearConsole.clearConsole();
