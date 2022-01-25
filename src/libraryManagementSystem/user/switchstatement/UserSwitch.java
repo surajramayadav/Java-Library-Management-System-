@@ -63,14 +63,22 @@ public class UserSwitch {
 
 			switch (adminOption) {
 			case 1:
-				user.userIssuedUserIdSearch(user_id);
-				ps.printData("");
+				if(user.userIssuedUserIdSearch(user_id)) {
+					ps.printData("");
+				}else {
+					ps.printData("User is not Issued Book ");
+				}
+			
 				userSwitch();
 				break;
 			case 2:
 				searchBook=sc.getStringInput("Enter Book Name : ");
-				user.userBookSearch(searchBook);
-				ps.printData("");
+				if(user.userBookSearch(searchBook)) {
+					ps.printData("");
+				}else {
+					ps.printData("Book Not Found ");
+				}
+				
 				userSwitch();
 				break;
 			case 3:
@@ -79,8 +87,6 @@ public class UserSwitch {
 				if(validation.matchPassword(password, cPassword)) {
 					if(user.userChangePassword(user_id, password)) {
 						ps.printData("Password is Changed Successfully");
-					}else {
-						ps.printData("Something Went Wrong !!!");
 					}
 				}else {
 					ps.printData("Password And Confirm Password Is not Matching ");

@@ -65,14 +65,18 @@ public class User {
 		return "error";
 	}
 
-	public void userIssuedUserIdSearch(int user_id) {
-
-		String sql = "select * from issued_book where user_id = '" + user_id + "'";
+	public boolean userIssuedUserIdSearch(int user_id) {
+		boolean isUserIssuedBook =false;
+		String sql = "select issued_book.issuedbook_id, issued_book.issued_date,issued_book.return_date,issued_book.return_status,book.book_name,user.user_name,admin.admin_username from issued_book\n"
+				+ "inner join book on issued_book.book_id = book.book_id\n"
+				+ "inner join user on issued_book.user_id = user.user_id\n"
+				+ "inner join admin on issued_book.admin_id = admin.admin_id where user.user_id = "+user_id+"";
 		try {
 			connection = DatabaseHelper.openConnection();
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(sql);
 			while (resultSet.next()) {
+				isUserIssuedBook=true;
 				ps.printData("");
 				ps.printDataWithoutLN(String.valueOf(resultSet.getInt(1)));
 				ps.printDataWithoutLN(" | ");
@@ -81,7 +85,12 @@ public class User {
 				ps.printDataWithoutLN(resultSet.getString(3));
 				ps.printDataWithoutLN(" | ");
 				ps.printDataWithoutLN(resultSet.getString(4));
-
+				ps.printDataWithoutLN(" | ");
+				ps.printDataWithoutLN(resultSet.getString(5));
+				ps.printDataWithoutLN(" | ");
+				ps.printDataWithoutLN(resultSet.getString(6));
+				ps.printDataWithoutLN(" | ");
+				ps.printDataWithoutLN(resultSet.getString(7));
 				ps.printData("");
 			}
 
@@ -92,16 +101,18 @@ public class User {
 //				e.printStackTrace();
 			log.error(ex.getMessage());
 		}
-
+		return isUserIssuedBook;
 	}
 
-	public void userBookSearch(String book_name) {
+	public boolean userBookSearch(String book_name) {
+		boolean isBook =false;
 		try {
 			 connection = DatabaseHelper.openConnection();
-			String sql = "select * from book where book_name like '" + book_name + "%'";
+			 String sql = "select book.book_id,book.book_name,book.book_isbn,book.book_quantity,book.book_author,genre.genre_type from book inner join genre on book.genre_id = genre.genre_id  where book.book_name like '" + book_name + "%'";
 			 statement = connection.createStatement();
 			 resultSet = statement.executeQuery(sql);
 			while (resultSet.next()) {
+				isBook=true;
 				ps.printData("");
 				ps.printDataWithoutLN(String.valueOf(resultSet.getInt(1)));
 				ps.printDataWithoutLN(" | ");
@@ -113,7 +124,7 @@ public class User {
 				ps.printDataWithoutLN(" | ");
 				ps.printDataWithoutLN(resultSet.getString(5));
 				ps.printDataWithoutLN(" | ");
-				ps.printDataWithoutLN(String.valueOf(resultSet.getInt(4)));
+				ps.printDataWithoutLN(resultSet.getString(6));
 				ps.printData("");
 			}
 
@@ -123,7 +134,7 @@ public class User {
 		} catch (Exception ex) {
 			log.error(ex);
 		}
-
+		return isBook;
 	}
 
 	public boolean userChangePassword(int user_id, String password) {

@@ -97,12 +97,14 @@ public class Admin implements Book,IssuedBook,User {
 		return flag;
 	}
 
-	public void adminSearch(String admin_username) {
+	public boolean adminSearch(String admin_username) {
+		boolean isAdmin=false;
 		try {
 			String sql = "select * from admin where admin_username like '" + admin_username + "%'";
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(sql);
 			while (resultSet.next()) {
+				isAdmin=true;
 				ps.printData("");
 				ps.printDataWithoutLN(String.valueOf(resultSet.getInt(1)));
 				ps.printDataWithoutLN(" | ");
@@ -120,6 +122,7 @@ public class Admin implements Book,IssuedBook,User {
 		} catch (Exception ex) {
 			log.error(ex);
 		}
+		return isAdmin;
 
 	}
 

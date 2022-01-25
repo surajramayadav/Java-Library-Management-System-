@@ -1,4 +1,5 @@
 package libraryManagementSystem.admin;
+
 import java.sql.*;
 
 import org.apache.logging.log4j.LogManager;
@@ -10,16 +11,20 @@ import libraryManagementSystem.utils.PrintStatement;
 public interface User {
 	Logger log = LogManager.getLogger(Admin.class.getName());
 	PrintStatement ps = new PrintStatement();
-	
-	default boolean userAdd(String user_name,String user_phone,String user_address) {
+
+	default boolean userAdd(String user_name, String user_phone, String user_address) {
 		boolean flag = false;
-		String sql = "insert into user(user_name,user_phone,user_address) values('"+user_name+"','"+user_phone+"','"+user_address+"')";
+		String sql = "insert into user(user_name,user_phone,user_address) values('" + user_name + "','" + user_phone
+				+ "','" + user_address + "')";
 		try {
 			Connection connection = DatabaseHelper.openConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.executeUpdate();
 			flag = true;
-		} catch (SQLException e) {
+		} catch(SQLIntegrityConstraintViolationException sq) {
+			ps.printData("User Phone Number is already Exits ");
+			log.error(sq.getMessage());
+		}catch (SQLException e) {
 //			e.printStackTrace();
 			log.error(e.getMessage());
 		} catch (Exception ex) {
@@ -47,13 +52,15 @@ public interface User {
 		return flag;
 	}
 
-	default void userSearch(String user_name) {
+	default boolean userSearch(String user_name) {
+		boolean isUser = false;
 		try {
 			Connection connection = DatabaseHelper.openConnection();
 			String sql = "select * from user where user_name like '" + user_name + "%'";
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(sql);
 			while (resultSet.next()) {
+				isUser = true;
 				ps.printData("");
 				ps.printDataWithoutLN(String.valueOf(resultSet.getInt(1)));
 				ps.printDataWithoutLN(" | ");
@@ -62,7 +69,7 @@ public interface User {
 				ps.printDataWithoutLN(resultSet.getString(3));
 				ps.printDataWithoutLN(" | ");
 				ps.printDataWithoutLN(resultSet.getString(4));
-				
+
 				ps.printData("");
 			}
 
@@ -72,7 +79,7 @@ public interface User {
 		} catch (Exception ex) {
 			log.error(ex);
 		}
-
+		return isUser;
 	}
 
 	default void userView() {
@@ -119,6 +126,5 @@ public interface User {
 		}
 		return flag;
 	}
-	
-	
+
 }

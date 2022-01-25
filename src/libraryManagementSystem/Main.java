@@ -18,8 +18,7 @@ public class Main {
 	static Logger log = null;
 
 	public static void main(String[] args) {
-		try {
-			
+		try {	
 			log = LogManager.getLogger(Main.class.getName());
 			LoginSwitch adminLogin = new LoginSwitch();
 			adminLogin.adminWelcomeLoginSwitch();

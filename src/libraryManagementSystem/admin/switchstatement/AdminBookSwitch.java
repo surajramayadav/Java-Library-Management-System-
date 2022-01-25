@@ -51,37 +51,54 @@ public class AdminBookSwitch {
 			switch (adminOption) {
 			case 1:
 				book_name = sc.getStringInput("Enter Book Name : ");
-				admin.bookSearch(book_name);
-				ps.printData("");
+				if(!admin.bookSearch(book_name)) {
+					ps.printData("");
+					ps.printData("Book is Not Exits ");
+				}
+				
 				adminBookSwitch();
 				break;
 			case 2:
 				book_name = sc.getStringInput("Enter Book Name : ");
-				book_isbn = sc.getStringInput("Enter Book ISBN Number : ");
-				book_author = sc.getStringInput("Enter Book Author Name : ");
-				book_qaunatity = sc.getIntInput("Enter Book Quantity : ");
-				genre_type = sc.getStringInput("Enter Genre Type : ");
-				if (admin.genreSearch(genre_type)) {
-					genre_id = admin.genreGetId(genre_type);
-					if (admin.bookAdd(book_name, book_isbn, book_qaunatity, book_author, genre_id)) {
+				String bookId=admin.checkBookAlredyExits(book_name);
+				if( bookId != "false") {
+					ps.printData("");
+					book_id=Integer.parseInt(bookId);
+					ps.printData("Book is alredy Exits ");
+					int quantity=admin.getBookQuantity(book_id);
+					book_qaunatity = sc.getIntInput("Book is alredy Exits so Enter Quantity : ");
+					int sum=quantity+book_qaunatity;
+					if(admin.bookQuantityUpdate(book_id, sum)) {
 						ps.printData("Book Added Successfully");
-						adminBookSwitch();
-					} else {
-						ps.printData("Something Went Wrong !!!");
-						adminBookSwitch();
 					}
-				} else {
-					if (admin.genreAdd(genre_type)) {
+					adminBookSwitch();
+				}else {
+					ps.printData("Book is Not Exits So Add New Book");
+					book_isbn = sc.getStringInput("Enter Book ISBN Number : ");
+					book_author = sc.getStringInput("Enter Book Author Name : ");
+					book_qaunatity = sc.getIntInput("Enter Book Quantity : ");
+					genre_type = sc.getStringInput("Enter Genre Type : ");
+					if (admin.genreSearch(genre_type)) {
 						genre_id = admin.genreGetId(genre_type);
 						if (admin.bookAdd(book_name, book_isbn, book_qaunatity, book_author, genre_id)) {
 							ps.printData("Book Added Successfully");
 							adminBookSwitch();
-						} else {
-							ps.printData("Something Went Wrong !!!");
+						}
 							adminBookSwitch();
+						
+					} else {
+						if (admin.genreAdd(genre_type)) {
+							genre_id = admin.genreGetId(genre_type);
+							if (admin.bookAdd(book_name, book_isbn, book_qaunatity, book_author, genre_id)) {
+								ps.printData("Book Added Successfully");
+								adminBookSwitch();
+							}
+								adminBookSwitch();
+							
 						}
 					}
 				}
+				
 
 				break;
 			case 3:
@@ -93,7 +110,22 @@ public class AdminBookSwitch {
 				bookUpdateSwitch();
 				break;
 			case 5:
-				ps.printData("1 st");
+				book_name = sc.getStringInput("Enter Book Name : ");
+				if(admin.bookSearch(book_name)) {
+					ps.printData("");
+					book_id=sc.getIntInput("Enter Book Id : ");
+					if(admin.issuedBookDeleteBook(book_id)) {
+						if(admin.bookDelete(book_id))
+						{
+							ps.printData("Book Deleted Successfully ");
+						}
+					}
+					
+				}else {
+					ps.printData("Book is Not Exits ");
+				}
+				
+				adminBookSwitch();
 				break;
 			case 6:
 				clearConsole.clearConsole();
@@ -139,53 +171,70 @@ public class AdminBookSwitch {
 			switch (adminOption) {
 			case 1:
 				book_name = sc.getStringInput("Enter Book Name : ");
-				admin.bookSearch(book_name);
-				ps.printData("");
-				book_id = sc.getIntInput("Enter Book Id : ");
-				book_name = sc.getStringInput("Enter Book New Name : ");
-				if(admin.bookNameUpdate(book_id, book_name)) {
-					ps.printData("Book Name Updated Successfully");
-				}else{
-					ps.printData("Something Went Wrong !!!");
+				if(admin.bookSearch(book_name)) {
+					ps.printData("");
+					book_id = sc.getIntInput("Enter Book Id : ");
+					book_name = sc.getStringInput("Enter Book New Name : ");
+					if(admin.bookNameUpdate(book_id, book_name)) {
+						ps.printData("Book Name Updated Successfully");
+					}else{
+						ps.printData("Something Went Wrong !!!");
+					}
+				}else {
+					ps.printData("Book Not Found");
 				}
+				
 				bookUpdateSwitch();
 				break;
 			case 2:
 				book_name = sc.getStringInput("Enter Book Name : ");
-				admin.bookSearch(book_name);
-				ps.printData("");
-				book_id = sc.getIntInput("Enter Book Id : ");
-				book_isbn = sc.getStringInput("Enter Book New ISBN Number : ");
-				if(admin.bookISBNUpdate(book_id, book_isbn)) {
-					ps.printData("Book ISBN Number Updated Successfully");
+				if(admin.bookSearch(book_name)) {
+					ps.printData("");
+					book_id = sc.getIntInput("Enter Book Id : ");
+					book_isbn = sc.getStringInput("Enter Book New ISBN Number : ");
+					if(admin.bookISBNUpdate(book_id, book_isbn)) {
+						ps.printData("Book ISBN Number Updated Successfully");
+					}else{
+						ps.printData("Something Went Wrong !!!");
+					}
 				}else{
-					ps.printData("Something Went Wrong !!!");
+					ps.printData("Book Not Found");
 				}
+				
 				bookUpdateSwitch();
 				break;
 			case 3:
 				book_name = sc.getStringInput("Enter Book Name : ");
-				admin.bookSearch(book_name);
-				ps.printData("");
-				book_id = sc.getIntInput("Enter Book Id : ");
-				book_qaunatity = sc.getIntInput("Enter Book Quantity : ");
-				if(admin.bookQuantityUpdate(book_id, book_qaunatity)) {
-					ps.printData("Book Quantity Updated Successfully");
-				}else{
-					ps.printData("Something Went Wrong !!!");
+				if(admin.bookSearch(book_name)) {
+					ps.printData("");
+					book_id = sc.getIntInput("Enter Book Id : ");
+					book_qaunatity = sc.getIntInput("Enter Book Quantity : ");
+					if(admin.bookQuantityUpdate(book_id, book_qaunatity)) {
+						ps.printData("Book Quantity Updated Successfully");
+					}else{
+						ps.printData("Something Went Wrong !!!");
+					}
+				}
+				
+				else{
+					ps.printData("Book Not Found");
 				}
 				bookUpdateSwitch();
 				break;
 			case 4:
 				book_name = sc.getStringInput("Enter Book Name : ");
-				admin.bookSearch(book_name);
-				ps.printData("");
-				book_id = sc.getIntInput("Enter Book Id : ");
-				book_author = sc.getStringInput("Enter Book Author Name : ");
-				if(admin.bookAuthorUpdate(book_id, book_author)) {
-					ps.printData("Book Author Updated Successfully");
-				}else{
-					ps.printData("Something Went Wrong !!!");
+				if(admin.bookSearch(book_name)) {
+					ps.printData("");
+					book_id = sc.getIntInput("Enter Book Id : ");
+					book_author = sc.getStringInput("Enter Book Author Name : ");
+					if(admin.bookAuthorUpdate(book_id, book_author)) {
+						ps.printData("Book Author Updated Successfully");
+					}else{
+						ps.printData("Something Went Wrong !!!");
+					}	
+				}
+				else{
+					ps.printData("Book Not Found");
 				}
 				bookUpdateSwitch();
 				break;

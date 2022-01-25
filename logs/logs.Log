@@ -1,3 +1,3 @@
-2022-01-24 20:27:27,836 ERROR l.a.Admin [main] For input string: "super"
-2022-01-24 20:27:55,855 ERROR l.a.Admin [main] For input string: "super"
-2022-01-24 20:28:23,413 ERROR l.a.Admin [main] For input string: "super"
+2022-01-25 18:39:02,439 ERROR l.a.s.AdminBookSwitch [main] java.util.NoSuchElementException: No line found
+2022-01-25 19:06:08,231 ERROR l.a.Admin [main] Unsupported conversion from TIMESTAMP to java.lang.Integer
+2022-01-25 19:11:04,226 ERROR l.a.Admin [main] Unsupported conversion from TIMESTAMP to java.lang.Integer

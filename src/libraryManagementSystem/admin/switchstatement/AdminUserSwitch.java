@@ -18,16 +18,16 @@ public class AdminUserSwitch {
 	String user_name = null;
 	String user_phone = null;
 	String user_address = null;
-	int user_id = 0 ;
-	ScannerInput sc=null;
-	
+	int user_id = 0;
+	ScannerInput sc = null;
+
 	public AdminUserSwitch() {
 		admin = new Admin();
 		log = LogManager.getLogger(AdminSwitch.class.getName());
-		 sc = new ScannerInput();
-		 ps = new PrintStatement();
+		sc = new ScannerInput();
+		ps = new PrintStatement();
 	}
-	
+
 	public void adminUserSwitch() {
 		try {
 			log = LogManager.getLogger(AdminUserSwitch.class.getName());
@@ -48,21 +48,24 @@ public class AdminUserSwitch {
 			switch (adminOption) {
 			case 1:
 				user_name = sc.getStringInput("Enter User Name : ");
-				admin.userSearch(user_name);
-				ps.printData("");
+				if (admin.userSearch(user_name)) {
+					ps.printData("");
+				} else {
+					ps.printData("User Not Found");
+				}
+
 				adminUserSwitch();
 				break;
 			case 2:
 				user_name = sc.getStringInput("Enter User Name : ");
 				user_phone = sc.getStringInput("Enter User Phone Number : ");
 				user_address = sc.getStringInput("Enter User Address : ");
-				if(admin.userAdd(user_name, user_phone, user_address)) {
+				if (admin.userAdd(user_name, user_phone, user_address)) {
 					ps.printData("User Added Successfully");
-					adminUserSwitch();
-				}else {
-					ps.printData("Something Went Wrong !!!");
-					adminUserSwitch();
+
 				}
+				adminUserSwitch();
+
 				break;
 			case 3:
 				admin.userView();
@@ -71,31 +74,36 @@ public class AdminUserSwitch {
 				break;
 			case 4:
 				user_name = sc.getStringInput("Enter User Name : ");
-				admin.userSearch(user_name);
-				ps.printData("");
-				user_id = sc.getIntInput("Enter User Id : ");
-				user_phone = sc.getStringInput("Enter User Phone Number : ");
-				if(admin.userPhoneUpdate(user_id, user_phone)) {
-					ps.printData("User Updatd Successfully");
-					adminUserSwitch();
-				}else {
-					ps.printData("Something Went Wrong !!!");
-					adminUserSwitch();
+				if (admin.userSearch(user_name)) {
+					ps.printData("");
+					user_id = sc.getIntInput("Enter User Id : ");
+					user_phone = sc.getStringInput("Enter User Phone Number : ");
+					if (admin.userPhoneUpdate(user_id, user_phone)) {
+						ps.printData("User Updatd Successfully");
+
+					}
+				} else {
+					ps.printData("User Not Found");
 				}
-				
+				adminUserSwitch();
+
 				break;
 			case 5:
 				user_name = sc.getStringInput("Enter User Name : ");
-				admin.userSearch(user_name);
-				ps.printData("");
-				user_id = sc.getIntInput("Enter User Id : ");
-				if(admin.userDelete(user_id)) {
-					ps.printData("User Deleted Successfully");
-					adminUserSwitch();
-				}else {
-					ps.printData("Something Went Wrong !!!");
-					adminUserSwitch();
+				if (admin.userSearch(user_name)) {
+					ps.printData("");
+					user_id = sc.getIntInput("Enter User Id : ");
+					if(admin.issuedBookDeleteUser(user_id)) {
+						if (admin.userDelete(user_id)) {
+							ps.printData("User Deleted Successfully");
+						}
+					}
+					
+				} else {
+					ps.printData("User Not Found");
 				}
+				adminUserSwitch();
+
 				break;
 			case 6:
 				clearConsole.clearConsole();

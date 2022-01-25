@@ -19,8 +19,8 @@ public class AdminIssueBookSwitch {
 	int admin_id = 0;
 	int user_id = 0;
 	int book_id = 0;
-	String book_name= null;
-	String user_name= null;
+	String book_name = null;
+	String user_name = null;
 	ScannerInput sc = null;
 	FileReadAndWrite fileReadAndWrite;
 
@@ -56,52 +56,90 @@ public class AdminIssueBookSwitch {
 
 				admin_id = Integer.parseInt(FileReadAndWrite.adminReadId());
 				book_name = sc.getStringInput("Enter Book Name : ");
-				admin.bookSearch(book_name);
-				ps.printData("");
-				book_id=sc.getIntInput("Enter Book Id : ");
-				user_name = sc.getStringInput("Enter User Name : ");
-				admin.userSearch(user_name);
-				ps.printData("");
-				user_id=sc.getIntInput("Enter User Id : ");
-				if(admin.issuedBookADD(admin_id, user_id, book_id)) {
-					ps.printData("Book Issued Successfully");
+				if (admin.bookSearch(book_name)) {
+					ps.printData("");
+					book_id = sc.getIntInput("Enter Book Id : ");
+					int quantity = admin.getBookQuantity(book_id);
+					if (quantity > 0) {
+						user_name = sc.getStringInput("Enter User Name : ");
+						if (admin.userSearch(user_name)) {
+							ps.printData("");
+							user_id = sc.getIntInput("Enter User Id : ");
+							if (admin.issuedBookADD(admin_id, user_id, book_id)) {
+								int sum = quantity - 1;
+								if (admin.bookQuantityUpdate(book_id, sum)) {
+									ps.printData("Book Issued Successfully");
+								}
+							}
+						} else {
+							ps.printData("User Is Not Found ");
+						}
+					} else {
+						ps.printData("Book Is Not Available ");
+					}
 				} else {
-					ps.printData("Something Went Wrong !!!");
+					ps.printData("Book Is Not Found");
 				}
+
 				adminIssueABookedSwitch();
 				break;
 			case 2:
-				
 				user_name = sc.getStringInput("Enter User Name : ");
-				admin.userSearch(user_name);
-				ps.printData("");
-				user_id=sc.getIntInput("Enter User Id : ");
-				book_name = sc.getStringInput("Enter Book Name : ");
-				admin.bookSearch(book_name);
-				ps.printData("");
-				book_id=sc.getIntInput("Enter Book Id : ");
-				String return_status= "done";
-				if(admin.issuedUserIdUpdate(user_id,book_id,return_status)) {
-					ps.printData("Book Returned Successfully");
+				if (admin.userSearch(user_name)) {
+					ps.printData("");
+					user_id = sc.getIntInput("Enter User Id : ");
+					book_name = sc.getStringInput("Enter Book Name : ");
+					if (admin.bookSearch(book_name)) {
+						ps.printData("");
+						book_id = sc.getIntInput("Enter Book Id : ");
+						int quantity = admin.getBookQuantity(book_id);
+						String return_status = "done";
+						if (admin.issuedUserIdUpdate(user_id, book_id, return_status)) {
+							int sum = quantity + 1;
+							if (admin.bookQuantityUpdate(book_id, sum)) {
+								ps.printData("Book Returned Successfully");
+							}
+						}
+					} else {
+						ps.printData("Book Not Found");
+					}
+
 				} else {
-					ps.printData("Something Went Wrong !!!");
+					ps.printData("User Not Found");
 				}
+
 				adminIssueABookedSwitch();
 				break;
 			case 3:
 				book_name = sc.getStringInput("Enter Book Name : ");
-				admin.bookSearch(book_name);
-				ps.printData("");
-				book_id=sc.getIntInput("Enter Book Id : ");
-				admin.issuedBookIdSearch(book_id);
+				if(admin.bookSearch(book_name)) {
+					ps.printData("");
+					book_id = sc.getIntInput("Enter Book Id : ");
+					if(admin.issuedBookIdSearch(book_id)) {
+						ps.printData("");
+					}else {
+						ps.printData("Issued Book Not Found");
+					}
+				} else {
+					ps.printData("Book Not Found");
+				}
+				
 				adminIssueABookedSwitch();
 				break;
 			case 4:
 				user_name = sc.getStringInput("Enter User Name : ");
-				admin.userSearch(user_name);
-				ps.printData("");
-				user_id=sc.getIntInput("Enter User Id : ");
-				admin.issuedUserIdSearch(user_id);
+				if(admin.userSearch(user_name)) {
+					ps.printData("");
+					user_id = sc.getIntInput("Enter User Id : ");
+					if(admin.issuedUserIdSearch(user_id)) {
+						ps.printData("");
+					}else {
+						ps.printData("Issued Book Not Found");
+					}
+				}else {
+					ps.printData("User Not Found");
+				}
+				
 				adminIssueABookedSwitch();
 				break;
 			case 5:
