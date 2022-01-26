@@ -66,6 +66,8 @@ public class User {
 	}
 
 	public boolean userIssuedUserIdSearch(int user_id) {
+		ps.printData("");
+		System.out.printf("%-6s%-15s%-15s%-10s%-20s%-15s%-15s\n","Id","Issued Date","Return Date","Status","Book Name","User Name", "Admin Username");
 		boolean isUserIssuedBook =false;
 		String sql = "select issued_book.issuedbook_id, issued_book.issued_date,issued_book.return_date,issued_book.return_status,book.book_name,user.user_name,admin.admin_username from issued_book\n"
 				+ "inner join book on issued_book.book_id = book.book_id\n"
@@ -77,21 +79,22 @@ public class User {
 			resultSet = statement.executeQuery(sql);
 			while (resultSet.next()) {
 				isUserIssuedBook=true;
-				ps.printData("");
-				ps.printDataWithoutLN(String.valueOf(resultSet.getInt(1)));
-				ps.printDataWithoutLN(" | ");
-				ps.printDataWithoutLN(resultSet.getString(2));
-				ps.printDataWithoutLN(" | ");
-				ps.printDataWithoutLN(resultSet.getString(3));
-				ps.printDataWithoutLN(" | ");
-				ps.printDataWithoutLN(resultSet.getString(4));
-				ps.printDataWithoutLN(" | ");
-				ps.printDataWithoutLN(resultSet.getString(5));
-				ps.printDataWithoutLN(" | ");
-				ps.printDataWithoutLN(resultSet.getString(6));
-				ps.printDataWithoutLN(" | ");
-				ps.printDataWithoutLN(resultSet.getString(7));
-				ps.printData("");
+				System.out.printf("%-6s%-15s%-15s%-10s%-20s%-15s%-15s\n",String.valueOf(resultSet.getInt(1)),resultSet.getString(2).substring(0,10),resultSet.getString(3).substring(0,10),resultSet.getString(4),resultSet.getString(5),resultSet.getString(6), resultSet.getString(7));
+//				ps.printData("");
+//				ps.printDataWithoutLN(String.valueOf(resultSet.getInt(1)));
+//				ps.printDataWithoutLN(" | ");
+//				ps.printDataWithoutLN(resultSet.getString(2));
+//				ps.printDataWithoutLN(" | ");
+//				ps.printDataWithoutLN(resultSet.getString(3));
+//				ps.printDataWithoutLN(" | ");
+//				ps.printDataWithoutLN(resultSet.getString(4));
+//				ps.printDataWithoutLN(" | ");
+//				ps.printDataWithoutLN(resultSet.getString(5));
+//				ps.printDataWithoutLN(" | ");
+//				ps.printDataWithoutLN(resultSet.getString(6));
+//				ps.printDataWithoutLN(" | ");
+//				ps.printDataWithoutLN(resultSet.getString(7));
+//				ps.printData("");
 			}
 
 		} catch (SQLException e) {
@@ -106,6 +109,8 @@ public class User {
 
 	public boolean userBookSearch(String book_name) {
 		boolean isBook =false;
+		ps.printData("");
+		System.out.printf("%-6s%-20s%-15s%-10s%-20s%-10s\n","Id","Book Name","Isbn","Quantity","Author","Genre");
 		try {
 			 connection = DatabaseHelper.openConnection();
 			 String sql = "select book.book_id,book.book_name,book.book_isbn,book.book_quantity,book.book_author,genre.genre_type from book inner join genre on book.genre_id = genre.genre_id  where book.book_name like '" + book_name + "%'";
@@ -113,19 +118,20 @@ public class User {
 			 resultSet = statement.executeQuery(sql);
 			while (resultSet.next()) {
 				isBook=true;
-				ps.printData("");
-				ps.printDataWithoutLN(String.valueOf(resultSet.getInt(1)));
-				ps.printDataWithoutLN(" | ");
-				ps.printDataWithoutLN(resultSet.getString(2));
-				ps.printDataWithoutLN(" | ");
-				ps.printDataWithoutLN(resultSet.getString(3));
-				ps.printDataWithoutLN(" | ");
-				ps.printDataWithoutLN(String.valueOf(resultSet.getInt(4)));
-				ps.printDataWithoutLN(" | ");
-				ps.printDataWithoutLN(resultSet.getString(5));
-				ps.printDataWithoutLN(" | ");
-				ps.printDataWithoutLN(resultSet.getString(6));
-				ps.printData("");
+				System.out.printf("%-6s%-20s%-15s%-10s%-20s%-10s\n",String.valueOf(resultSet.getInt(1)),resultSet.getString(2),resultSet.getString(3),String.valueOf(resultSet.getInt(4)),resultSet.getString(5),resultSet.getString(6));
+//				ps.printData("");
+//				ps.printDataWithoutLN(String.valueOf(resultSet.getInt(1)));
+//				ps.printDataWithoutLN(" | ");
+//				ps.printDataWithoutLN(resultSet.getString(2));
+//				ps.printDataWithoutLN(" | ");
+//				ps.printDataWithoutLN(resultSet.getString(3));
+//				ps.printDataWithoutLN(" | ");
+//				ps.printDataWithoutLN(String.valueOf(resultSet.getInt(4)));
+//				ps.printDataWithoutLN(" | ");
+//				ps.printDataWithoutLN(resultSet.getString(5));
+//				ps.printDataWithoutLN(" | ");
+//				ps.printDataWithoutLN(resultSet.getString(6));
+//				ps.printData("");
 			}
 
 		} catch (SQLException e) {

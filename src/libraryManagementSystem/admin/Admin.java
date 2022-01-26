@@ -99,21 +99,24 @@ public class Admin implements Book,IssuedBook,User {
 
 	public boolean adminSearch(String admin_username) {
 		boolean isAdmin=false;
+		ps.printData("");
+		System.out.printf("%-6s%-15s%-10s\n", "Id","Username","Role");
+		
 		try {
 			String sql = "select * from admin where admin_username like '" + admin_username + "%'";
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(sql);
 			while (resultSet.next()) {
 				isAdmin=true;
-				ps.printData("");
-				ps.printDataWithoutLN(String.valueOf(resultSet.getInt(1)));
-				ps.printDataWithoutLN(" | ");
-				ps.printDataWithoutLN(resultSet.getString(2));
-				ps.printDataWithoutLN(" | ");
-				ps.printDataWithoutLN(resultSet.getString(3));
-				ps.printDataWithoutLN(" | ");
-				ps.printDataWithoutLN(resultSet.getString(4));
-				ps.printData("");
+				System.out.printf("%-6s%-15s%-10s\n", String.valueOf(resultSet.getInt(1)),resultSet.getString(2),resultSet.getString(4));
+//				ps.printDataWithoutLN(String.valueOf(resultSet.getInt(1)));
+//				ps.printDataWithoutLN(" | ");
+//				ps.printDataWithoutLN(resultSet.getString(2));
+////				ps.printDataWithoutLN(" | ");
+////				ps.printDataWithoutLN(resultSet.getString(3));
+//				ps.printDataWithoutLN(" | ");
+//				ps.printDataWithoutLN(resultSet.getString(4));
+//				ps.printData("");
 			}
 
 		} catch (SQLException e) {
@@ -129,18 +132,20 @@ public class Admin implements Book,IssuedBook,User {
 	public void adminView() {
 		try {
 			ps.printData("");
+			System.out.printf("%-6s%-15s%-10s\n", "Id","Username","Role");
 			String sql = "select * from admin";
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(sql);
 			while (resultSet.next()) {
-				ps.printDataWithoutLN(String.valueOf(resultSet.getInt(1)));
-				ps.printDataWithoutLN(" | ");
-				ps.printDataWithoutLN(resultSet.getString(2));
-				ps.printDataWithoutLN(" | ");
-				ps.printDataWithoutLN(resultSet.getString(3));
-				ps.printDataWithoutLN(" | ");
-				ps.printDataWithoutLN(resultSet.getString(4));
-				ps.printData("");
+				System.out.printf("%-6s%-15s%-10s\n", String.valueOf(resultSet.getInt(1)),resultSet.getString(2),resultSet.getString(4));
+//				ps.printDataWithoutLN(String.valueOf(resultSet.getInt(1)));
+//				ps.printDataWithoutLN(" | ");
+//				ps.printDataWithoutLN(resultSet.getString(2));
+//				ps.printDataWithoutLN(" | ");
+//				ps.printDataWithoutLN(resultSet.getString(3));
+//				ps.printDataWithoutLN(" | ");
+//				ps.printDataWithoutLN(resultSet.getString(4));
+//				ps.printData("");
 			}
 
 		} catch (SQLException e) {

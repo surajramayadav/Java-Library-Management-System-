@@ -52,7 +52,8 @@ public interface Book extends Genre {
 
 	default boolean bookSearch(String book_name) {
 		boolean isBook = false;
-		int firstData = 0;
+		ps.printData("");
+		System.out.printf("%-6s%-20s%-15s%-10s%-20s%-10s\n","Id","Book Name","Isbn","Quantity","Author","Genre");
 		try {
 			Connection connection = DatabaseHelper.openConnection();
 			String sql = "select book.book_id,book.book_name,book.book_isbn,book.book_quantity,book.book_author,genre.genre_type from book inner join genre on book.genre_id = genre.genre_id  where book.book_name like '" + book_name + "%'";
@@ -60,18 +61,19 @@ public interface Book extends Genre {
 			ResultSet resultSet = statement.executeQuery(sql);
 				while (resultSet.next()) {
 					isBook = true;
-					ps.printData("");
-					ps.printDataWithoutLN(String.valueOf(resultSet.getInt(1)));
-					ps.printDataWithoutLN(" | ");
-					ps.printDataWithoutLN(resultSet.getString(2));
-					ps.printDataWithoutLN(" | ");
-					ps.printDataWithoutLN(resultSet.getString(3));
-					ps.printDataWithoutLN(" | ");
-					ps.printDataWithoutLN(String.valueOf(resultSet.getInt(4)));
-					ps.printDataWithoutLN(" | ");
-					ps.printDataWithoutLN(resultSet.getString(5));
-					ps.printDataWithoutLN(" | ");
-					ps.printDataWithoutLN(resultSet.getString(6));
+					System.out.printf("%-6s%-20s%-15s%-10s%-20s%-10s\n",String.valueOf(resultSet.getInt(1)),resultSet.getString(2),resultSet.getString(3),String.valueOf(resultSet.getInt(4)),resultSet.getString(5),resultSet.getString(6));
+//					ps.printData("");
+//					ps.printDataWithoutLN(String.valueOf(resultSet.getInt(1)));
+//					ps.printDataWithoutLN(" | ");
+//					ps.printDataWithoutLN(resultSet.getString(2));
+//					ps.printDataWithoutLN(" | ");
+//					ps.printDataWithoutLN(resultSet.getString(3));
+//					ps.printDataWithoutLN(" | ");
+//					ps.printDataWithoutLN(String.valueOf(resultSet.getInt(4)));
+//					ps.printDataWithoutLN(" | ");
+//					ps.printDataWithoutLN(resultSet.getString(5));
+//					ps.printDataWithoutLN(" | ");
+//					ps.printDataWithoutLN(resultSet.getString(6));
 					ps.printData("");
 					
 				}
@@ -109,25 +111,28 @@ public interface Book extends Genre {
 	}
 
 	default void bookView() {
+		ps.printData("");
+		System.out.printf("%-6s%-20s%-15s%-10s%-20s%-10s\n","Id","Book Name","Isbn","Quantity","Author","Genre");
 		try {
 			Connection connection = DatabaseHelper.openConnection();
 			String sql = "select book.book_id,book.book_name,book.book_isbn,book.book_quantity,book.book_author,genre.genre_type from book inner join genre on book.genre_id = genre.genre_id";
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(sql);
 			while (resultSet.next()) {
-				ps.printData("");
-				ps.printDataWithoutLN(String.valueOf(resultSet.getInt(1)));
-				ps.printDataWithoutLN(" | ");
-				ps.printDataWithoutLN(resultSet.getString(2));
-				ps.printDataWithoutLN(" | ");
-				ps.printDataWithoutLN(resultSet.getString(3));
-				ps.printDataWithoutLN(" | ");
-				ps.printDataWithoutLN(String.valueOf(resultSet.getInt(4)));
-				ps.printDataWithoutLN(" | ");
-				ps.printDataWithoutLN(resultSet.getString(5));
-				ps.printDataWithoutLN(" | ");
-				ps.printDataWithoutLN(resultSet.getString(6));
-				ps.printData("");
+				System.out.printf("%-6s%-20s%-15s%-10s%-20s%-10s\n",String.valueOf(resultSet.getInt(1)),resultSet.getString(2),resultSet.getString(3),String.valueOf(resultSet.getInt(4)),resultSet.getString(5),resultSet.getString(6));
+//				ps.printData("");
+//				ps.printDataWithoutLN(String.valueOf(resultSet.getInt(1)));
+//				ps.printDataWithoutLN(" | ");
+//				ps.printDataWithoutLN(resultSet.getString(2));
+//				ps.printDataWithoutLN(" | ");
+//				ps.printDataWithoutLN(resultSet.getString(3));
+//				ps.printDataWithoutLN(" | ");
+//				ps.printDataWithoutLN(String.valueOf(resultSet.getInt(4)));
+//				ps.printDataWithoutLN(" | ");
+//				ps.printDataWithoutLN(resultSet.getString(5));
+//				ps.printDataWithoutLN(" | ");
+//				ps.printDataWithoutLN(resultSet.getString(6));
+//				ps.printData("");
 			}
 
 		} catch (SQLException e) {

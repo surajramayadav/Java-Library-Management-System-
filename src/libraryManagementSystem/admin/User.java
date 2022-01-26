@@ -54,6 +54,8 @@ public interface User {
 
 	default boolean userSearch(String user_name) {
 		boolean isUser = false;
+		ps.printData("");
+		System.out.printf("%-6s%-15s%-12s%-10s\n","Id","User Name","Phone No","Address");
 		try {
 			Connection connection = DatabaseHelper.openConnection();
 			String sql = "select * from user where user_name like '" + user_name + "%'";
@@ -61,16 +63,17 @@ public interface User {
 			ResultSet resultSet = statement.executeQuery(sql);
 			while (resultSet.next()) {
 				isUser = true;
-				ps.printData("");
-				ps.printDataWithoutLN(String.valueOf(resultSet.getInt(1)));
-				ps.printDataWithoutLN(" | ");
-				ps.printDataWithoutLN(resultSet.getString(2));
-				ps.printDataWithoutLN(" | ");
-				ps.printDataWithoutLN(resultSet.getString(3));
-				ps.printDataWithoutLN(" | ");
-				ps.printDataWithoutLN(resultSet.getString(4));
-
-				ps.printData("");
+				System.out.printf("%-6s%-15s%-12s%-10s\n",String.valueOf(resultSet.getInt(1)),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4));
+//				ps.printData("");
+//				ps.printDataWithoutLN(String.valueOf(resultSet.getInt(1)));
+//				ps.printDataWithoutLN(" | ");
+//				ps.printDataWithoutLN(resultSet.getString(2));
+//				ps.printDataWithoutLN(" | ");
+//				ps.printDataWithoutLN(resultSet.getString(3));
+//				ps.printDataWithoutLN(" | ");
+//				ps.printDataWithoutLN(resultSet.getString(4));
+//
+//				ps.printData("");
 			}
 
 		} catch (SQLException e) {
@@ -84,20 +87,23 @@ public interface User {
 
 	default void userView() {
 		try {
+			ps.printData("");
+			System.out.printf("%-6s%-15s%-12s%-10s\n","Id","User Name","Phone No","Address");
 			Connection connection = DatabaseHelper.openConnection();
 			String sql = "select * from user";
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(sql);
 			while (resultSet.next()) {
-				ps.printData("");
-				ps.printDataWithoutLN(String.valueOf(resultSet.getInt(1)));
-				ps.printDataWithoutLN(" | ");
-				ps.printDataWithoutLN(resultSet.getString(2));
-				ps.printDataWithoutLN(" | ");
-				ps.printDataWithoutLN(resultSet.getString(3));
-				ps.printDataWithoutLN(" | ");
-				ps.printDataWithoutLN(resultSet.getString(4));
-				ps.printData("");
+				System.out.printf("%-6s%-15s%-12s%-10s\n",String.valueOf(resultSet.getInt(1)),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4));
+//				ps.printData("");
+//				ps.printDataWithoutLN(String.valueOf(resultSet.getInt(1)));
+//				ps.printDataWithoutLN(" | ");
+//				ps.printDataWithoutLN(resultSet.getString(2));
+//				ps.printDataWithoutLN(" | ");
+//				ps.printDataWithoutLN(resultSet.getString(3));
+//				ps.printDataWithoutLN(" | ");
+//				ps.printDataWithoutLN(resultSet.getString(4));
+//				ps.printData("");
 			}
 
 		} catch (SQLException e) {

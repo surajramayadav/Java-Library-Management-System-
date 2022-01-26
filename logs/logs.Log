@@ -1,3 +1,4 @@
-2022-01-25 18:39:02,439 ERROR l.a.s.AdminBookSwitch [main] java.util.NoSuchElementException: No line found
-2022-01-25 19:06:08,231 ERROR l.a.Admin [main] Unsupported conversion from TIMESTAMP to java.lang.Integer
-2022-01-25 19:11:04,226 ERROR l.a.Admin [main] Unsupported conversion from TIMESTAMP to java.lang.Integer
+2022-01-25 21:26:11,594 ERROR l.u.s.UserSwitch [main] null
+2022-01-26 22:31:11,089 ERROR l.LoginSwitch [main] null
+2022-01-27 00:06:56,969 ERROR l.a.s.AdminBookSwitch [main] java.util.NoSuchElementException
+2022-01-27 00:06:56,979 ERROR l.a.s.AdminBookSwitch [main] java.util.NoSuchElementException

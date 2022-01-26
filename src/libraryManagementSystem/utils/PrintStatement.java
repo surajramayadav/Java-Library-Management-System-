@@ -36,5 +36,7 @@ public class PrintStatement {
 	public void printDataWithoutLN(String msg) {
 		System.out.print(msg);
 	}
+	
+
 
 }
