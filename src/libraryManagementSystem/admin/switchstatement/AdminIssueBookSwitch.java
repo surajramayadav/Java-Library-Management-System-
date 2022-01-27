@@ -56,15 +56,22 @@ public class AdminIssueBookSwitch {
 
 				admin_id = Integer.parseInt(FileReadAndWrite.adminReadId());
 				book_name = sc.getStringInput("Enter Book Name : ");
+				// searching book
 				if (admin.bookSearch(book_name)) {
 					ps.printData("");
+					
 					book_id = sc.getIntInput("Enter Book Id : ");
+					//get qaunatity of book by id
 					int quantity = admin.getBookQuantity(book_id);
+					//checking quantity for issueing book
 					if (quantity > 0) {
 						user_name = sc.getStringInput("Enter User Name : ");
+						//search user
 						if (admin.userSearch(user_name)) {
 							ps.printData("");
+							
 							user_id = sc.getIntInput("Enter User Id : ");
+							// issued a book
 							if (admin.issuedBookADD(admin_id, user_id, book_id)) {
 								int sum = quantity - 1;
 								if (admin.bookQuantityUpdate(book_id, sum)) {
@@ -87,15 +94,20 @@ public class AdminIssueBookSwitch {
 				user_name = sc.getStringInput("Enter User Name : ");
 				if (admin.userSearch(user_name)) {
 					ps.printData("");
+					
 					user_id = sc.getIntInput("Enter User Id : ");
 					book_name = sc.getStringInput("Enter Book Name : ");
+					// searching book
 					if (admin.bookSearch(book_name)) {
 						ps.printData("");
+						
 						book_id = sc.getIntInput("Enter Book Id : ");
 						int quantity = admin.getBookQuantity(book_id);
 						String return_status = "done";
+						// updating return status
 						if (admin.issuedUserIdUpdate(user_id, book_id, return_status)) {
 							int sum = quantity + 1;
+							// updating book quantity
 							if (admin.bookQuantityUpdate(book_id, sum)) {
 								ps.printData("Book Returned Successfully");
 							}
@@ -114,9 +126,11 @@ public class AdminIssueBookSwitch {
 				book_name = sc.getStringInput("Enter Book Name : ");
 				if(admin.bookSearch(book_name)) {
 					ps.printData("");
+					
 					book_id = sc.getIntInput("Enter Book Id : ");
 					if(admin.issuedBookIdSearch(book_id)) {
 						ps.printData("");
+						
 					}else {
 						ps.printData("Issued Book Not Found");
 					}
@@ -130,9 +144,11 @@ public class AdminIssueBookSwitch {
 				user_name = sc.getStringInput("Enter User Name : ");
 				if(admin.userSearch(user_name)) {
 					ps.printData("");
+					
 					user_id = sc.getIntInput("Enter User Id : ");
 					if(admin.issuedUserIdSearch(user_id)) {
 						ps.printData("");
+						
 					}else {
 						ps.printData("Issued Book Not Found");
 					}
@@ -144,6 +160,8 @@ public class AdminIssueBookSwitch {
 				break;
 			case 5:
 				admin.issuedView();
+				ps.printData("");
+				
 				adminIssueABookedSwitch();
 				break;
 			case 6:
@@ -153,8 +171,7 @@ public class AdminIssueBookSwitch {
 				break;
 			case 7:
 				clearConsole.clearConsole();
-				ps.printExit();
-				System.exit(0);
+				clearConsole.exitConsole();
 				break;
 
 			default:

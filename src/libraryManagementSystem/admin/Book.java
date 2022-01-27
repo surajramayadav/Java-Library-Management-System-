@@ -52,7 +52,7 @@ public interface Book extends Genre {
 
 	default boolean bookSearch(String book_name) {
 		boolean isBook = false;
-		ps.printData("");
+		
 		System.out.printf("%-6s%-20s%-15s%-10s%-20s%-10s\n","Id","Book Name","Isbn","Quantity","Author","Genre");
 		try {
 			Connection connection = DatabaseHelper.openConnection();
@@ -74,7 +74,7 @@ public interface Book extends Genre {
 //					ps.printDataWithoutLN(resultSet.getString(5));
 //					ps.printDataWithoutLN(" | ");
 //					ps.printDataWithoutLN(resultSet.getString(6));
-					ps.printData("");
+//					ps.printData("");
 					
 				}
 
@@ -111,7 +111,7 @@ public interface Book extends Genre {
 	}
 
 	default void bookView() {
-		ps.printData("");
+		
 		System.out.printf("%-6s%-20s%-15s%-10s%-20s%-10s\n","Id","Book Name","Isbn","Quantity","Author","Genre");
 		try {
 			Connection connection = DatabaseHelper.openConnection();
@@ -220,7 +220,7 @@ public interface Book extends Genre {
 
 	default String checkBookAlredyExits(String book_name) {
 	String isBookExits = "false";
-	
+	System.out.printf("%-6s%-20s%-15s%-10s%-20s%-10s\n","Id","Book Name","Isbn","Quantity","Author","Genre");
 	try {
 		Connection connection = DatabaseHelper.openConnection();
 		String sql = "select * from book where book_name = '" + book_name + "'";
@@ -228,19 +228,20 @@ public interface Book extends Genre {
 		ResultSet resultSet = statement.executeQuery(sql);
 
 			while (resultSet.next()) {
-				ps.printData("");
-				ps.printDataWithoutLN(String.valueOf(resultSet.getInt(1)));
+//				ps.printData("");
+//				ps.printDataWithoutLN(String.valueOf(resultSet.getInt(1)));
 				isBookExits = String.valueOf(resultSet.getInt(1));
-				ps.printDataWithoutLN(" | ");
-				ps.printDataWithoutLN(resultSet.getString(2));
-				ps.printDataWithoutLN(" | ");
-				ps.printDataWithoutLN(resultSet.getString(3));
-				ps.printDataWithoutLN(" | ");
-				ps.printDataWithoutLN(String.valueOf(resultSet.getInt(4)));
-				ps.printDataWithoutLN(" | ");
-				ps.printDataWithoutLN(resultSet.getString(5));
-				ps.printDataWithoutLN(" | ");
-				ps.printDataWithoutLN(String.valueOf(resultSet.getInt(4)));
+				System.out.printf("%-6s%-20s%-15s%-10s%-20s%-10s\n",String.valueOf(resultSet.getInt(1)),resultSet.getString(2),resultSet.getString(3),String.valueOf(resultSet.getInt(4)),resultSet.getString(5),resultSet.getString(6));
+//				ps.printDataWithoutLN(" | ");
+//				ps.printDataWithoutLN(resultSet.getString(2));
+//				ps.printDataWithoutLN(" | ");
+//				ps.printDataWithoutLN(resultSet.getString(3));
+//				ps.printDataWithoutLN(" | ");
+//				ps.printDataWithoutLN(String.valueOf(resultSet.getInt(4)));
+//				ps.printDataWithoutLN(" | ");
+//				ps.printDataWithoutLN(resultSet.getString(5));
+//				ps.printDataWithoutLN(" | ");
+//				ps.printDataWithoutLN(String.valueOf(resultSet.getInt(6)));
 				ps.printData("");
 				
 			}

@@ -54,7 +54,7 @@ public interface User {
 
 	default boolean userSearch(String user_name) {
 		boolean isUser = false;
-		ps.printData("");
+//		ps.printData("");
 		System.out.printf("%-6s%-15s%-12s%-10s\n","Id","User Name","Phone No","Address");
 		try {
 			Connection connection = DatabaseHelper.openConnection();
@@ -87,7 +87,7 @@ public interface User {
 
 	default void userView() {
 		try {
-			ps.printData("");
+//			ps.printData("");
 			System.out.printf("%-6s%-15s%-12s%-10s\n","Id","User Name","Phone No","Address");
 			Connection connection = DatabaseHelper.openConnection();
 			String sql = "select * from user";

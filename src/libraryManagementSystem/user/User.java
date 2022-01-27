@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 
 import libraryManagementSystem.admin.Admin;
 import libraryManagementSystem.database.DatabaseHelper;
+import libraryManagementSystem.utils.CrytoGraphy;
 import libraryManagementSystem.utils.PrintStatement;
 
 public class User {
@@ -21,11 +22,13 @@ public class User {
 	ResultSet resultSet = null;
 	PreparedStatement preparedStatement = null;
 	Statement statement;
+	CrytoGraphy crytoGraphy=null;
 
 	public User() {
 		try {
 			log = LogManager.getLogger(Admin.class.getName());
 			ps = new PrintStatement();
+			crytoGraphy=new CrytoGraphy();
 			connection = DatabaseHelper.openConnection();
 		} catch (ClassNotFoundException | SQLException e) {
 
@@ -37,23 +40,23 @@ public class User {
 	}
 
 	public String userLogin(String username, String password) {
-
-		String sql = "select * from user where user_phone=? and user_password=?";
+		String user_id="false";
+		String sql = "select * from user where user_phone=?";
 		try {
 
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, username);
-			preparedStatement.setString(2, password);
 			resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next()) {
-//				System.out.print("success");
-				return String.valueOf(resultSet.getInt(1));
-			} else {
-//				System.out.print("failed");
-				return "false";
+				if(resultSet.getString(5) != null) {
+					String deCodePassword=crytoGraphy.getDecrpytedData(resultSet.getString(5));
+					if(deCodePassword.equals(password)) {
+						user_id=String.valueOf(resultSet.getInt(1));
+					}
+				}
+//				
 			}
-
 		} catch (SQLException e) {
 //			e.printStackTrace();
 			log.error(e.getMessage());
@@ -61,8 +64,8 @@ public class User {
 //			e.printStackTrace();
 			log.error(ex.getMessage());
 		}
-		System.out.print("error");
-		return "error";
+		
+		return user_id;
 	}
 
 	public boolean userIssuedUserIdSearch(int user_id) {

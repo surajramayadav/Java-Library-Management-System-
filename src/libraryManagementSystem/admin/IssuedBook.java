@@ -20,7 +20,7 @@ public interface IssuedBook {
 	
 	default boolean issuedBookADD(int admin_id,int user_id,int book_id) {
 		boolean flag=false;
-		String sql = "insert into issued_book(return_date,book_id,admin_id,user_id) values(DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 10 DAY),"+book_id+","+admin_id+","+user_id+")";
+		String sql = "insert into issued_book(return_date,book_id,admin_id,user_id) values(DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 5 DAY),"+book_id+","+admin_id+","+user_id+")";
 		try {
 			Connection connection = DatabaseHelper.openConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -37,7 +37,7 @@ public interface IssuedBook {
 	}
 	
 	default boolean issuedBookIdSearch(int book_id) {
-		ps.printData("");
+//		ps.printData("");
 		System.out.printf("%-6s%-15s%-15s%-10s%-20s%-15s%-15s\n","Id","Issued Date","Return Date","Status","Book Name","User Name", "Admin Username");
 		boolean isIssuedBook =false;
 		String sql = "select issued_book.issuedbook_id, issued_book.issued_date,issued_book.return_date,issued_book.return_status,book.book_name,user.user_name,admin.admin_username from issued_book\n"
@@ -81,7 +81,7 @@ public interface IssuedBook {
 
 
 	default void issuedView() {
-		ps.printData("");
+//		ps.printData("");
 		System.out.printf("%-6s%-15s%-15s%-10s%-20s%-15s%-15s\n","Id","Issued Date","Return Date","Status","Book Name","User Name", "Admin Username");
 		String sql = "select issued_book.issuedbook_id,issued_book.issued_date,issued_book.return_date,issued_book.return_status,book.book_name,user.user_name,admin.admin_username from issued_book\n"
 				+ "inner join book on issued_book.book_id = book.book_id\n"

@@ -20,8 +20,10 @@ public class Main {
 	public static void main(String[] args) {
 		try {	
 			log = LogManager.getLogger(Main.class.getName());
-			LoginSwitch adminLogin = new LoginSwitch();
-			adminLogin.adminWelcomeLoginSwitch();
+			
+			// Entry Class
+			LoginSwitch loginSwitch = new LoginSwitch();
+			loginSwitch.adminWelcomeLoginSwitch();
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}

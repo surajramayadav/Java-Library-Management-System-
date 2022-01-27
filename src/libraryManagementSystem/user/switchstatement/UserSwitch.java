@@ -12,6 +12,7 @@ import libraryManagementSystem.admin.switchstatement.AdminHome;
 import libraryManagementSystem.admin.switchstatement.AdminSwitch;
 import libraryManagementSystem.user.User;
 import libraryManagementSystem.utils.ClearConsole;
+import libraryManagementSystem.utils.CrytoGraphy;
 import libraryManagementSystem.utils.FileReadAndWrite;
 import libraryManagementSystem.utils.PrintStatement;
 import libraryManagementSystem.utils.ScannerInput;
@@ -27,6 +28,7 @@ public class UserSwitch {
 	String searchBook=null;
 	User user=null;
 	Validation validation =null;
+	CrytoGraphy crytoGraphy=null;
 	
 	public UserSwitch() {
 		log = LogManager.getLogger(AdminSwitch.class.getName());
@@ -36,6 +38,7 @@ public class UserSwitch {
 		user_id=Integer.parseInt(FileReadAndWrite.userReadId());
 		user=new User();
 		validation =new Validation();
+		crytoGraphy=new CrytoGraphy();
 	}
 	
 	
@@ -66,6 +69,7 @@ public class UserSwitch {
 				if(user.userIssuedUserIdSearch(user_id)) {
 					ps.printData("");
 				}else {
+					ps.printData("");
 					ps.printData("User is not Issued Book ");
 				}
 			
@@ -76,6 +80,7 @@ public class UserSwitch {
 				if(user.userBookSearch(searchBook)) {
 					ps.printData("");
 				}else {
+					ps.printData("");
 					ps.printData("Book Not Found ");
 				}
 				
@@ -85,7 +90,8 @@ public class UserSwitch {
 				String password =sc.getStringInput("Enter New Password : ");
 				String cPassword=sc.getStringInput("Enter Confirm Password : ");
 				if(validation.matchPassword(password, cPassword)) {
-					if(user.userChangePassword(user_id, password)) {
+					String encodedPassword=crytoGraphy.setEncrpytedData(password);
+					if(user.userChangePassword(user_id, encodedPassword)) {
 						ps.printData("Password is Changed Successfully");
 					}
 				}else {
@@ -100,8 +106,7 @@ public class UserSwitch {
 				break;
 			case 5:
 				clearConsole.clearConsole();
-				ps.printExit();
-				System.exit(0);
+				clearConsole.exitConsole();
 				break;
 			// Default case statement
 			default:

@@ -40,7 +40,7 @@ public class AdminHome {
 					superAdmin = false;
 				}
 			}
-			
+			// checking admin is normal or super
 			if(superAdmin) {
 				ps.printData("Welcome Admin");
 				ps.printData("1) Issue Book");
@@ -92,7 +92,8 @@ public class AdminHome {
 					break;
 				case 5:
 					clearConsole.clearConsole();
-					ps.printData("Report");
+					AdminReport adminReport=new AdminReport();
+					adminReport.AdminReportSwitch();
 					break;
 				case 6:
 					clearConsole.clearConsole();
@@ -102,8 +103,7 @@ public class AdminHome {
 					break;
 				case 7:
 					clearConsole.clearConsole();
-					ps.printExit();
-					System.exit(0);
+					clearConsole.exitConsole();
 					break;
 
 				default:
@@ -134,7 +134,8 @@ public class AdminHome {
 					break;
 				case 4:
 					clearConsole.clearConsole();
-					ps.printData("Report");
+					AdminReport adminReport=new AdminReport();
+					adminReport.AdminReportSwitch();
 					break;
 				case 5:
 					clearConsole.clearConsole();
@@ -144,8 +145,7 @@ public class AdminHome {
 					break;
 				case 6:
 					clearConsole.clearConsole();
-					ps.printExit();
-					System.exit(0);
+					clearConsole.exitConsole();
 					break;
 
 				default:

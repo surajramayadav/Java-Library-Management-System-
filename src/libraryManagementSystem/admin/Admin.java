@@ -7,22 +7,24 @@ import org.apache.logging.log4j.Logger;
 
 import libraryManagementSystem.LoginSwitch;
 import libraryManagementSystem.database.DatabaseHelper;
+import libraryManagementSystem.utils.CrytoGraphy;
 import libraryManagementSystem.utils.PrintStatement;
 
-public class Admin implements Book,IssuedBook,User {
+public class Admin implements Book,IssuedBook,User,Report {
 	static Logger log = null;
 	PrintStatement ps = null;
 	Connection connection = null;
 	ResultSet resultSet = null;
 	PreparedStatement preparedStatement = null;
 	Statement statement;
-	
+	CrytoGraphy crytoGraphy=null;
 
 	public Admin() {
 		try {
 			log = LogManager.getLogger(Admin.class.getName());
 			ps = new PrintStatement();
 			connection = DatabaseHelper.openConnection();
+			 crytoGraphy=new CrytoGraphy();
 		} catch (ClassNotFoundException | SQLException e) {
 
 			log.error(e.getMessage());
@@ -34,21 +36,26 @@ public class Admin implements Book,IssuedBook,User {
 
 	public String adminLogin(String admin_username, String admin_password) {
 
-		String sql = "select * from admin where admin_username=? and admin_password=?";
+		String admin_id="false";
+		String sql = "select * from admin where admin_username=?";
 		try {
-
+			
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, admin_username);
-			preparedStatement.setString(2, admin_password);
 			resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next()) {
+				if(resultSet.getString(3)!=null) {
+					String deCodePassword=crytoGraphy.getDecrpytedData(resultSet.getString(3));
+//					ps.printData(deCodePassword);
+					if(admin_password.equals(deCodePassword)) {
+						admin_id= String.valueOf(resultSet.getInt(1));
+					}
+					
+				}
 //				System.out.print("success");
-				return String.valueOf(resultSet.getInt(1));
-			} else {
-//				System.out.print("failed");
-				return "false";
-			}
+				
+			} 
 
 		} catch (SQLException e) {
 //			e.printStackTrace();
@@ -57,8 +64,8 @@ public class Admin implements Book,IssuedBook,User {
 //			e.printStackTrace();
 			log.error(ex.getMessage());
 		}
-		System.out.print("error");
-		return "error";
+	
+		return admin_id;
 	}
 
 	public boolean adminAdd(String admin_username, String admin_password, String admin_role) {
@@ -99,13 +106,12 @@ public class Admin implements Book,IssuedBook,User {
 
 	public boolean adminSearch(String admin_username) {
 		boolean isAdmin=false;
-		ps.printData("");
-		System.out.printf("%-6s%-15s%-10s\n", "Id","Username","Role");
-		
+		System.out.printf("%-6s%-15s%-10s\n","Id","Username","Role");
 		try {
 			String sql = "select * from admin where admin_username like '" + admin_username + "%'";
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(sql);
+		
 			while (resultSet.next()) {
 				isAdmin=true;
 				System.out.printf("%-6s%-15s%-10s\n", String.valueOf(resultSet.getInt(1)),resultSet.getString(2),resultSet.getString(4));
@@ -131,8 +137,7 @@ public class Admin implements Book,IssuedBook,User {
 
 	public void adminView() {
 		try {
-			ps.printData("");
-			System.out.printf("%-6s%-15s%-10s\n", "Id","Username","Role");
+			System.out.printf("%-6s%-15s%-10s\n","Id","Username","Role");
 			String sql = "select * from admin";
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(sql);

@@ -51,6 +51,7 @@ public class AdminBookSwitch {
 			switch (adminOption) {
 			case 1:
 				book_name = sc.getStringInput("Enter Book Name : ");
+				//search Book by name
 				if(!admin.bookSearch(book_name)) {
 					ps.printData("");
 					ps.printData("Book is Not Exits ");
@@ -60,14 +61,17 @@ public class AdminBookSwitch {
 				break;
 			case 2:
 				book_name = sc.getStringInput("Enter Book Name : ");
+				//checking book is alraedy exits or not
 				String bookId=admin.checkBookAlredyExits(book_name);
 				if( bookId != "false") {
 					ps.printData("");
 					book_id=Integer.parseInt(bookId);
 					ps.printData("Book is alredy Exits ");
+					// get the quantity of book
 					int quantity=admin.getBookQuantity(book_id);
 					book_qaunatity = sc.getIntInput("Book is alredy Exits so Enter Quantity : ");
 					int sum=quantity+book_qaunatity;
+					//update book quantity
 					if(admin.bookQuantityUpdate(book_id, sum)) {
 						ps.printData("Book Added Successfully");
 					}
@@ -78,8 +82,11 @@ public class AdminBookSwitch {
 					book_author = sc.getStringInput("Enter Book Author Name : ");
 					book_qaunatity = sc.getIntInput("Enter Book Quantity : ");
 					genre_type = sc.getStringInput("Enter Genre Type : ");
+					// checking genre already exits or not
 					if (admin.genreSearch(genre_type)) {
+						//get genre id
 						genre_id = admin.genreGetId(genre_type);
+						// adding book 
 						if (admin.bookAdd(book_name, book_isbn, book_qaunatity, book_author, genre_id)) {
 							ps.printData("Book Added Successfully");
 							adminBookSwitch();
@@ -87,8 +94,11 @@ public class AdminBookSwitch {
 							adminBookSwitch();
 						
 					} else {
+						// adding genre 
 						if (admin.genreAdd(genre_type)) {
+							// getting genre id
 							genre_id = admin.genreGetId(genre_type);
+							//add book
 							if (admin.bookAdd(book_name, book_isbn, book_qaunatity, book_author, genre_id)) {
 								ps.printData("Book Added Successfully");
 								adminBookSwitch();
@@ -134,8 +144,8 @@ public class AdminBookSwitch {
 				break;
 			case 7:
 				clearConsole.clearConsole();
-				ps.printExit();
-				System.exit(0);
+				clearConsole.exitConsole();
+				
 				break;
 
 			default:
@@ -245,8 +255,7 @@ public class AdminBookSwitch {
 				break;
 			case 6:
 				clearConsole.clearConsole();
-				ps.printExit();
-				System.exit(0);
+				clearConsole.exitConsole();
 				break;
 
 			default:

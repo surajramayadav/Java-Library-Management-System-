@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 import libraryManagementSystem.admin.Admin;
 import libraryManagementSystem.utils.ClearConsole;
+import libraryManagementSystem.utils.CrytoGraphy;
 import libraryManagementSystem.utils.PrintStatement;
 import libraryManagementSystem.utils.ScannerInput;
 
@@ -20,12 +21,14 @@ public class AdminSwitch {
 	String admin_role = null;
 	int admin_id = 0;
 	ScannerInput sc = null;
+	CrytoGraphy crytoGraphy=null;
 
 	public AdminSwitch() {
 		admin = new Admin();
 		log = LogManager.getLogger(AdminSwitch.class.getName());
 		sc = new ScannerInput();
 		ps = new PrintStatement();
+		crytoGraphy =new CrytoGraphy();
 	}
 
 	public void adminSwitch() {
@@ -48,6 +51,7 @@ public class AdminSwitch {
 				admin_username = sc.getStringInput("Enter Admin UserName : ");
 				if (admin.adminSearch(admin_username)) {
 					ps.printData("");
+				
 				} else {
 					ps.printData("Admin Not Found");
 				}
@@ -56,7 +60,8 @@ public class AdminSwitch {
 				break;
 			case 2:
 				admin_username = sc.getStringInput("Enter Admin UserName : ");
-				admin_password = sc.getStringInput("Enter Admin Password : ");
+				String password = sc.getStringInput("Enter Admin Password : ");
+				admin_password=crytoGraphy.setEncrpytedData(password);
 				admin_role = sc.getStringInput("Enter Admin Role (super/normal) : ");
 				if (admin.adminAdd(admin_username, admin_password, admin_role)) {
 					ps.printData("Admin Added Successfully");
@@ -66,7 +71,7 @@ public class AdminSwitch {
 				break;
 			case 3:
 				admin.adminView();
-				ps.printData("");
+				
 				adminSwitch();
 				break;
 			case 4:
@@ -76,6 +81,7 @@ public class AdminSwitch {
 				admin_username = sc.getStringInput("Enter Admin UserName : ");
 				if (admin.adminSearch(admin_username)) {
 					ps.printData("");
+					
 					admin_id = sc.getIntInput("Enter Admin User Id : ");
 					if (admin.issuedBookDeleteAdmin(admin_id)) {
 						if (admin.adminDelete(admin_id)) {
@@ -97,8 +103,7 @@ public class AdminSwitch {
 				break;
 			case 7:
 				clearConsole.clearConsole();
-				ps.printExit();
-				System.exit(0);
+				clearConsole.exitConsole();
 				break;
 
 			default:
@@ -179,8 +184,7 @@ public class AdminSwitch {
 				break;
 			case 5:
 				clearConsole.clearConsole();
-				ps.printExit();
-				System.exit(0);
+				clearConsole.exitConsole();
 				break;
 
 			default:

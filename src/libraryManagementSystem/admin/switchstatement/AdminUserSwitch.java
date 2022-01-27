@@ -50,6 +50,7 @@ public class AdminUserSwitch {
 				user_name = sc.getStringInput("Enter User Name : ");
 				if (admin.userSearch(user_name)) {
 					ps.printData("");
+					
 				} else {
 					ps.printData("User Not Found");
 				}
@@ -70,6 +71,7 @@ public class AdminUserSwitch {
 			case 3:
 				admin.userView();
 				ps.printData("");
+				
 				adminUserSwitch();
 				break;
 			case 4:
@@ -112,8 +114,7 @@ public class AdminUserSwitch {
 				break;
 			case 7:
 				clearConsole.clearConsole();
-				ps.printExit();
-				System.exit(0);
+				clearConsole.exitConsole();
 				break;
 
 			default:
