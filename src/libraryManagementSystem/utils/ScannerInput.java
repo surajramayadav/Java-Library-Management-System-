@@ -5,14 +5,22 @@ import java.util.Scanner;
 
 public class ScannerInput {
 
-	public int getIntInput(String msg) {
+	public int getIntInput(String msg) throws NotANumberException {
+		int input = 0;
 		System.out.print(msg);
 		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(System.in);
-		return sc.nextInt();
+		if(sc.hasNextInt()) {
+			input= sc.nextInt();	
+		}
+		else {
+			throw new NotANumberException("Please Enter A Number !!!");
+		}
+		return input;
+		
 	}
 
-	public String getStringInput(String msg) {
+	public String getStringInput(String msg){
 		System.out.print(msg);
 		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(System.in);

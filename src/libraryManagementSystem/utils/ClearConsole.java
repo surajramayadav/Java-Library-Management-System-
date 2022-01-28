@@ -12,8 +12,8 @@ public class ClearConsole {
 	public void clearConsole() {
 		log = LogManager.getLogger(ClearConsole.class.getName());
 		try {
-			for (int i = 0; i < 50; ++i)
-				System.out.println();
+//			for (int i = 0; i < 50; ++i)
+//				System.out.println();
 		} catch (Exception e) {
 			// TODO: handle exception
 			log.error(e);

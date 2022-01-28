@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 import libraryManagementSystem.admin.Admin;
 import libraryManagementSystem.utils.ClearConsole;
+import libraryManagementSystem.utils.NotANumberException;
 import libraryManagementSystem.utils.PrintStatement;
 import libraryManagementSystem.utils.ScannerInput;
 
@@ -68,7 +69,13 @@ public class AdminReport {
 				AdminReportSwitch();
 				break;
 			}
-		} catch (InputMismatchException ex) {
+		}catch ( NotANumberException na) {
+			// TODO: handle exception
+			clearConsole.clearConsole();
+			AdminReportSwitch();
+		} 
+ 
+		catch (InputMismatchException ex) {
 			// TODO: handle exception
 			ps.printData("Wrong Option is entered");
 			AdminReportSwitch();

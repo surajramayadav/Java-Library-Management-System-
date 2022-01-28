@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 import libraryManagementSystem.admin.Admin;
 import libraryManagementSystem.utils.FileReadAndWrite;
+import libraryManagementSystem.utils.NotANumberException;
 import libraryManagementSystem.admin.switchstatement.AdminHome;
 import libraryManagementSystem.user.User;
 import libraryManagementSystem.user.switchstatement.UserSwitch;
@@ -48,7 +49,6 @@ public class LoginSwitch {
 				// Checking Username And password for authenication
 				ps.printData("Admin Login");
 				String adminUserName = sc.getStringInput("Enter Username : ");
-				
 				String adminPassword = sc.getStringInput("Enter Password : ");
 				
 //				ps.printData("UserName Is " + adminUserName + " Password is " + adminPassword);
@@ -105,7 +105,13 @@ public class LoginSwitch {
 				break;
 			}
 
-		} catch (InputMismatchException ex) {
+		}catch ( NotANumberException na) {
+			// TODO: handle exception
+			clearConsole.clearConsole();
+			adminWelcomeLoginSwitch();
+		} 
+
+		catch (InputMismatchException ex) {
 			// TODO: handle exception
 			clearConsole.clearConsole();
 			ps.printData("Wrong Option is entered");

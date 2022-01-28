@@ -19,7 +19,7 @@ public class PrintStatement {
 		printData("---------------------------------------------------------------------------------------");
 	}
 	
-	public int printIntOption() {
+	public int printIntOption() throws NotANumberException {
 		printData("---------------------------------------------------------------------------------------");
 		int rootOption = sc.getIntInput("Enter an option : ");
 		printData("---------------------------------------------------------------------------------------");
