@@ -48,6 +48,7 @@ public class LoginSwitch {
 				// Checking Username And password for authenication
 				ps.printData("Admin Login");
 				String adminUserName = sc.getStringInput("Enter Username : ");
+				
 				String adminPassword = sc.getStringInput("Enter Password : ");
 				
 //				ps.printData("UserName Is " + adminUserName + " Password is " + adminPassword);

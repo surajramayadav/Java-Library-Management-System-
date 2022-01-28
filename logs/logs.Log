@@ -1,3 +1,3 @@
-2022-01-27 17:11:01,420 ERROR l.a.s.AdminHome [main] java.lang.NumberFormatException: For input string: "error"
-2022-01-27 17:11:01,421 ERROR l.a.s.AdminHome [main] java.lang.NumberFormatException: For input string: "error"
-2022-01-27 17:11:01,421 ERROR l.a.s.AdminHome [main] java.lang.NumberFormatException: For input string: "error"
+2022-01-27 18:50:10,644 ERROR l.a.s.AdminIssueBookSwitch [main] java.util.NoSuchElementException
+2022-01-28 09:39:55,453 ERROR l.LoginSwitch [main] null
+2022-01-28 10:01:36,837 ERROR l.LoginSwitch [main] null
