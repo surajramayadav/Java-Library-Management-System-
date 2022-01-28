@@ -37,6 +37,7 @@ public interface Report {
 				
 		} catch (SQLException e) {
 			log.error(e);
+			System.out.println("Invalid Input");
 
 		} catch (Exception ex) {
 			log.error(ex);
@@ -61,6 +62,7 @@ public interface Report {
 				
 		} catch (SQLException e) {
 			log.error(e);
+			System.out.println("Invalid Input");
 
 		} catch (Exception ex) {
 			log.error(ex);

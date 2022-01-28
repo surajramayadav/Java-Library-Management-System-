@@ -14,11 +14,14 @@ public interface User {
 
 	default boolean userAdd(String user_name, String user_phone, String user_address) {
 		boolean flag = false;
-		String sql = "insert into user(user_name,user_phone,user_address) values('" + user_name + "','" + user_phone
-				+ "','" + user_address + "')";
+		String sql = "insert into user(user_name,user_phone,user_address) values(?,?,?)";
 		try {
 			Connection connection = DatabaseHelper.openConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, user_name);
+			preparedStatement.setString(2, user_phone);
+			preparedStatement.setString(3, user_address);
+			
 			preparedStatement.executeUpdate();
 			flag = true;
 		} catch(SQLIntegrityConstraintViolationException sq) {
@@ -26,6 +29,7 @@ public interface User {
 			log.error(sq.getMessage());
 		}catch (SQLException e) {
 //			e.printStackTrace();
+			System.out.println("Invalid Input");
 			log.error(e.getMessage());
 		} catch (Exception ex) {
 //				e.printStackTrace();
@@ -36,14 +40,16 @@ public interface User {
 
 	default boolean userDelete(int user_id) {
 		boolean flag = false;
-		String sql = "DELETE FROM `user` WHERE user_id = '" + user_id + "'";
+		String sql = "DELETE FROM `user` WHERE user_id =?";
 		try {
 			Connection connection = DatabaseHelper.openConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, user_id);
 			preparedStatement.executeUpdate();
 			flag = true;
 		} catch (SQLException e) {
 //			e.printStackTrace();
+			System.out.println("Invalid Input");
 			log.error(e.getMessage());
 		} catch (Exception ex) {
 //				e.printStackTrace();
@@ -78,7 +84,7 @@ public interface User {
 
 		} catch (SQLException e) {
 			log.error(e);
-
+			System.out.println("Invalid Input");
 		} catch (Exception ex) {
 			log.error(ex);
 		}
@@ -108,6 +114,7 @@ public interface User {
 
 		} catch (SQLException e) {
 			log.error(e);
+			System.out.println("Invalid Input");
 
 		} catch (Exception ex) {
 			log.error(ex);
@@ -119,13 +126,16 @@ public interface User {
 		boolean flag = false;
 		try {
 			Connection connection = DatabaseHelper.openConnection();
-			String sql = "update user set user_phone='" + user_phone + "' where user_id=" + user_id + "; ";
+			String sql = "update user set user_phone=? where user_id=? ";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, user_phone);
+			preparedStatement.setInt(2, user_id);
 			preparedStatement.executeUpdate();
 			flag = true;
 
 		} catch (SQLException e) {
 			log.error(e);
+			System.out.println("Invalid Input");
 
 		} catch (Exception ex) {
 			log.error(ex);

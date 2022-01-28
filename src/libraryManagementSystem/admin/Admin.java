@@ -26,7 +26,7 @@ public class Admin implements Book,IssuedBook,User,Report {
 			connection = DatabaseHelper.openConnection();
 			 crytoGraphy=new CrytoGraphy();
 		} catch (ClassNotFoundException | SQLException e) {
-
+			System.out.println("Invalid Input");
 			log.error(e.getMessage());
 		} catch (Exception ex) {
 			log.error(ex.getMessage());
@@ -60,6 +60,7 @@ public class Admin implements Book,IssuedBook,User,Report {
 		} catch (SQLException e) {
 //			e.printStackTrace();
 			log.error(e.getMessage());
+			System.out.println("Invalid Input");
 		} catch (Exception ex) {
 //			e.printStackTrace();
 			log.error(ex.getMessage());
@@ -71,15 +72,18 @@ public class Admin implements Book,IssuedBook,User,Report {
 	public boolean adminAdd(String admin_username, String admin_password, String admin_role) {
 
 		boolean flag = false;
-		String sql = "INSERT INTO `admin` ( `admin_username`, `admin_password`, `admin_role`) VALUES('" + admin_username
-				+ "','" + admin_password + "','" + admin_role + "')";
+		String sql = "INSERT INTO `admin` ( `admin_username`, `admin_password`, `admin_role`) VALUES(?,?,?)";
 		try {
 			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, admin_username);
+			preparedStatement.setString(2, admin_password);
+			preparedStatement.setString(3, admin_role);
 			preparedStatement.executeUpdate();
 			flag = true;
 		} catch (SQLException e) {
 //			e.printStackTrace();
 			log.error(e.getMessage());
+			System.out.println("Invalid Input");
 		} catch (Exception ex) {
 //				e.printStackTrace();
 			log.error(ex.getMessage());
@@ -90,12 +94,14 @@ public class Admin implements Book,IssuedBook,User,Report {
 	public boolean adminDelete(int admin_id) {
 		boolean flag = false;
 		try {
-			String sql1 = "DELETE FROM `admin` WHERE admin_id = '" + admin_id + "'";
+			String sql1 = "DELETE FROM `admin` WHERE admin_id = ?";
 			preparedStatement = connection.prepareStatement(sql1);
+			preparedStatement.setInt(1, admin_id);
 			preparedStatement.executeUpdate();
 
 			flag = true;
 		} catch (SQLException e) {
+			System.out.println("Invalid Input");
 			log.error(e);
 		} catch (Exception ex) {
 
@@ -127,7 +133,7 @@ public class Admin implements Book,IssuedBook,User,Report {
 
 		} catch (SQLException e) {
 			log.error(e);
-
+			System.out.println("Invalid Input");
 		} catch (Exception ex) {
 			log.error(ex);
 		}
@@ -155,7 +161,7 @@ public class Admin implements Book,IssuedBook,User,Report {
 
 		} catch (SQLException e) {
 			log.error(e);
-
+			System.out.println("Invalid Input");
 		} catch (Exception ex) {
 			log.error(ex);
 		}
@@ -165,8 +171,10 @@ public class Admin implements Book,IssuedBook,User,Report {
 	public boolean adminUserNameUpdate(int admin_id, String admin_username) {
 		boolean flag = false;
 		try {
-			String sql = "update admin set admin_username='" + admin_username + "' where admin_id=" + admin_id + "; ";
+			String sql = "update admin set admin_username=? where admin_id=? ";
 			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, admin_username);
+			preparedStatement.setInt(2, admin_id);
 			preparedStatement.executeUpdate();
 			flag = true;
 
@@ -182,14 +190,16 @@ public class Admin implements Book,IssuedBook,User,Report {
 	public boolean adminPasswordUpdate(int admin_id, String admin_password) {
 		boolean flag = false;
 		try {
-			String sql = "update admin set admin_password='" + admin_password + "' where admin_id=" + admin_id + "; ";
+			String sql = "update admin set admin_password=? where admin_id=? ";
 			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, admin_password);
+			preparedStatement.setInt(2, admin_id);
 			preparedStatement.executeUpdate();
 			flag = true;
 
 		} catch (SQLException e) {
 			log.error(e);
-
+			System.out.println("Invalid Input");
 		} catch (Exception ex) {
 			log.error(ex);
 		}
@@ -199,14 +209,16 @@ public class Admin implements Book,IssuedBook,User,Report {
 	public boolean adminRoleUpdate(int admin_id, String admin_role) {
 		boolean flag = false;
 		try {
-			String sql = "update admin set admin_role='" + admin_role + "' where admin_id=" + admin_id + "; ";
+			String sql = "update admin set admin_role=? where admin_id=? ";
 			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, admin_role);
+			preparedStatement.setInt(2, admin_id);
 			preparedStatement.executeUpdate();
 			flag = true;
 
 		} catch (SQLException e) {
 			log.error(e);
-
+			System.out.println("Invalid Input");
 		} catch (Exception ex) {
 			log.error(ex);
 		}
@@ -234,6 +246,7 @@ public class Admin implements Book,IssuedBook,User,Report {
 		} catch (SQLException e) {
 //			e.printStackTrace();
 			log.error(e.getMessage());
+			System.out.println("Invalid Input");
 		} catch (Exception ex) {
 //			e.printStackTrace();
 			log.error(ex.getMessage());

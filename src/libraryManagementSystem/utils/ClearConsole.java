@@ -1,10 +1,13 @@
 package libraryManagementSystem.utils;
 
+import java.sql.Connection;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import libraryManagementSystem.LoginSwitch;
 import libraryManagementSystem.admin.switchstatement.AdminHome;
+import libraryManagementSystem.database.DatabaseHelper;
 
 public class ClearConsole {
 	static Logger log = null;
@@ -22,6 +25,7 @@ public class ClearConsole {
 	}
 
 	public void exitConsole() {
+
 		LoginSwitch loginSwitch = new LoginSwitch();
 		loginSwitch.adminWelcomeLoginSwitch();
 

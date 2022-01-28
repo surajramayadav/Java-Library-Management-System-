@@ -20,7 +20,7 @@ public class Main {
 	public static void main(String[] args) {
 		try {	
 			log = LogManager.getLogger(Main.class.getName());
-			
+			log.error("hii");
 			// Entry Class
 			LoginSwitch loginSwitch = new LoginSwitch();
 			loginSwitch.adminWelcomeLoginSwitch();

@@ -9,19 +9,19 @@
 			fileName="${filename}/logs.Log"
 			filePattern="target/rolling1/test1-${sd:type}.%i.log.gz">
 			<PatternLayout>
-				<pattern>%d %p %c{1.} [%t] %m%n</pattern>
+				<pattern> %L %d %p %c{1.} [%t] %m%n</pattern>
 			</PatternLayout>
 			<SizeBasedTriggeringPolicy size="500" />
 		</RollingFile>
 		0
-		<Console name="Console" target="SYSTEM_OUT">
+		<!-- <Console name="Console" target="SYSTEM_OUT">
 			<PatternLayout
 				pattern="%msg%n" />
-		</Console>
+		</Console> -->
 	</Appenders>
 	<Loggers>
 		<Root level="trace">
-			<AppenderRef ref="Console" />
+			<!--  <AppenderRef ref="Console" /> -->
 			<AppenderRef ref="file" />
 		</Root>
 	</Loggers>

@@ -20,15 +20,20 @@ public interface IssuedBook {
 	
 	default boolean issuedBookADD(int admin_id,int user_id,int book_id) {
 		boolean flag=false;
-		String sql = "insert into issued_book(return_date,book_id,admin_id,user_id) values(DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 5 DAY),"+book_id+","+admin_id+","+user_id+")";
+		String sql = "insert into issued_book(return_date,book_id,admin_id,user_id) values(DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 5 DAY),?,?,?)";
 		try {
 			Connection connection = DatabaseHelper.openConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, book_id);
+			preparedStatement.setInt(2, admin_id);
+			preparedStatement.setInt(3, user_id);
+			
 			preparedStatement.executeUpdate();
 			flag = true;
 		} catch (SQLException e) {
 //			e.printStackTrace();
 			log.error(e.getMessage());
+			System.out.println("Invalid Input");
 		} catch (Exception ex) {
 //				ex.printStackTrace();
 			log.error(ex.getMessage());
@@ -71,6 +76,7 @@ public interface IssuedBook {
 		} catch (SQLException e) {
 //			e.printStackTrace();
 			log.error(e.getMessage());
+			System.out.println("Invalid Input");
 		} catch (Exception ex) {
 //				e.printStackTrace();
 			log.error(ex.getMessage());
@@ -113,6 +119,7 @@ public interface IssuedBook {
 		} catch (SQLException e) {
 //			e.printStackTrace();
 			log.error(e.getMessage());
+			System.out.println("Invalid Input");
 		} catch (Exception ex) {
 //				e.printStackTrace();
 			log.error(ex.getMessage());
@@ -156,6 +163,7 @@ public interface IssuedBook {
 		} catch (SQLException e) {
 //			e.printStackTrace();
 			log.error(e.getMessage());
+			System.out.println("Invalid Input");
 		} catch (Exception ex) {
 //				e.printStackTrace();
 			log.error(ex.getMessage());
@@ -168,8 +176,11 @@ public interface IssuedBook {
 		boolean flag = false;
 		try {
 			Connection connection = DatabaseHelper.openConnection();
-			String sql = "update issued_book set return_status='" + return_status + "' where user_id=" + user_id + " AND book_id="+book_id+"";
+			String sql = "update issued_book set return_status=? where user_id=? AND book_id=?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, return_status);
+			preparedStatement.setInt(2, user_id);
+			preparedStatement.setInt(3, book_id);
 			preparedStatement.executeUpdate();
 			flag = true;
 
@@ -185,10 +196,11 @@ public interface IssuedBook {
 
 	default boolean issuedBookDeleteUser(int user_id) {
 		boolean flag = false;
-		String sql = "DELETE FROM `issued_book` WHERE user_id = '" + user_id + "'";
+		String sql = "DELETE FROM `issued_book` WHERE user_id = ?";
 		try {
 			Connection connection = DatabaseHelper.openConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, user_id);
 			preparedStatement.executeUpdate();
 			flag = true;
 		} catch (SQLIntegrityConstraintViolationException sd) {
@@ -196,6 +208,7 @@ public interface IssuedBook {
 		} 
 		catch (SQLException e) {
 //			e.printStackTrace();
+			System.out.println("Invalid Input");
 			log.error(e.getMessage());
 		} catch (Exception ex) {
 //				ex.printStackTrace();
@@ -206,10 +219,11 @@ public interface IssuedBook {
 	
 	default boolean issuedBookDeleteAdmin(int admin_id) {
 		boolean flag = false;
-		String sql = "DELETE FROM `issued_book` WHERE admin_id = '" + admin_id + "'";
+		String sql = "DELETE FROM `issued_book` WHERE admin_id = ?";
 		try {
 			Connection connection = DatabaseHelper.openConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, admin_id);
 			preparedStatement.executeUpdate();
 			flag = true;
 		} catch (SQLIntegrityConstraintViolationException sd) {
@@ -217,6 +231,7 @@ public interface IssuedBook {
 		} 
 		catch (SQLException e) {
 //			e.printStackTrace();
+			System.out.println("Invalid Input");
 			log.error(e.getMessage());
 		} catch (Exception ex) {
 //				ex.printStackTrace();
@@ -227,10 +242,11 @@ public interface IssuedBook {
 
 	default boolean issuedBookDeleteBook(int book_id) {
 		boolean flag = false;
-		String sql = "DELETE FROM `issued_book` WHERE book_id = '" + book_id + "'";
+		String sql = "DELETE FROM `issued_book` WHERE book_id = ?";
 		try {
 			Connection connection = DatabaseHelper.openConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, book_id);
 			preparedStatement.executeUpdate();
 			flag = true;
 		} catch (SQLIntegrityConstraintViolationException sd) {
@@ -239,6 +255,7 @@ public interface IssuedBook {
 		catch (SQLException e) {
 //			e.printStackTrace();
 			log.error(e.getMessage());
+			System.out.println("Invalid Input");
 		} catch (Exception ex) {
 //				ex.printStackTrace();
 			log.error(ex.getMessage());

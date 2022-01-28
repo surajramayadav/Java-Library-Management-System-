@@ -31,7 +31,7 @@ public class User {
 			crytoGraphy=new CrytoGraphy();
 			connection = DatabaseHelper.openConnection();
 		} catch (ClassNotFoundException | SQLException e) {
-
+			System.out.println("Invalid Input");
 			log.error(e.getMessage());
 		} catch (Exception ex) {
 			log.error(ex.getMessage());
@@ -59,6 +59,7 @@ public class User {
 			}
 		} catch (SQLException e) {
 //			e.printStackTrace();
+			System.out.println("Invalid Input");
 			log.error(e.getMessage());
 		} catch (Exception ex) {
 //			e.printStackTrace();
@@ -102,6 +103,7 @@ public class User {
 
 		} catch (SQLException e) {
 //			e.printStackTrace();
+			System.out.println("Invalid Input");
 			log.error(e.getMessage());
 		} catch (Exception ex) {
 //				e.printStackTrace();
@@ -139,7 +141,7 @@ public class User {
 
 		} catch (SQLException e) {
 			log.error(e);
-
+			System.out.println("Invalid Input");
 		} catch (Exception ex) {
 			log.error(ex);
 		}
@@ -157,6 +159,7 @@ public class User {
 
 		} catch (SQLException e) {
 			log.error(e);
+			System.out.println("Invalid Input");
 
 		} catch (Exception ex) {
 			log.error(ex);

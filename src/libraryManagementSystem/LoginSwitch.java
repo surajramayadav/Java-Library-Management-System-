@@ -1,5 +1,6 @@
 package libraryManagementSystem;
 
+import java.sql.Connection;
 import java.util.InputMismatchException;
 
 import org.apache.logging.log4j.LogManager;
@@ -9,6 +10,7 @@ import libraryManagementSystem.admin.Admin;
 import libraryManagementSystem.utils.FileReadAndWrite;
 import libraryManagementSystem.utils.NotANumberException;
 import libraryManagementSystem.admin.switchstatement.AdminHome;
+import libraryManagementSystem.database.DatabaseHelper;
 import libraryManagementSystem.user.User;
 import libraryManagementSystem.user.switchstatement.UserSwitch;
 import libraryManagementSystem.utils.ClearConsole;
@@ -94,6 +96,8 @@ public class LoginSwitch {
 				userSwitch.userSwitch();
 				break;
 			case 3:
+				Connection connection = DatabaseHelper.openConnection();
+				connection.close();
 				clearConsole.clearConsole();
 				ps.printExit();
 				System.exit(0);

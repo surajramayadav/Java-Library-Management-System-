@@ -35,7 +35,7 @@ public class UserSwitch {
 		sc = new ScannerInput();
 		ps = new PrintStatement();
 		fileReadAndWrite =new FileReadAndWrite();
-		user_id=Integer.parseInt(FileReadAndWrite.userReadId());
+		
 		user=new User();
 		validation =new Validation();
 		crytoGraphy=new CrytoGraphy();
@@ -66,6 +66,7 @@ public class UserSwitch {
 
 			switch (adminOption) {
 			case 1:
+				 user_id=Integer.parseInt(FileReadAndWrite.userReadId());
 				if(user.userIssuedUserIdSearch(user_id)) {
 					ps.printData("");
 				}else {
@@ -87,6 +88,7 @@ public class UserSwitch {
 				userSwitch();
 				break;
 			case 3:
+				user_id=Integer.parseInt(FileReadAndWrite.userReadId());
 				String password =sc.getStringInput("Enter New Password : ");
 				String cPassword=sc.getStringInput("Enter Confirm Password : ");
 				if(validation.matchPassword(password, cPassword)) {

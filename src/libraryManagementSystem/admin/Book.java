@@ -6,13 +6,17 @@ import libraryManagementSystem.database.DatabaseHelper;
 
 public interface Book extends Genre {
 
-	default boolean bookAdd(String book_name, String book_isbn, int book_quantity, String book_author, int genre_id) {
+	default boolean bookAdd(String book_name, String book_isbn, int book_quantity, String book_author, int genre_id ) {
 		boolean flag = false;
-		String sql = "insert into book (book_name,book_isbn,book_quantity,book_author,genre_id) values " + "('"
-				+ book_name + "','" + book_isbn + "','" + book_quantity + "','" + book_author + "','" + genre_id + "')";
+		String sql = "insert into book (book_name,book_isbn,book_quantity,book_author,genre_id) values (?,?,?,?,?)";
 		try {
 			Connection connection = DatabaseHelper.openConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, book_name);
+			preparedStatement.setString(2, book_isbn);
+			preparedStatement.setInt(3, book_quantity);
+			preparedStatement.setString(4, book_author);
+			preparedStatement.setInt(5, genre_id);
 			preparedStatement.executeUpdate();
 			flag = true;
 		}catch(SQLIntegrityConstraintViolationException sq) {
@@ -22,6 +26,7 @@ public interface Book extends Genre {
 		catch (SQLException e) {
 //			e.printStackTrace();
 			log.error(e.getMessage());
+			System.out.println("Invalid Input");
 		} catch (Exception ex) {
 //				ex.printStackTrace();
 			log.error(ex.getMessage());
@@ -31,10 +36,11 @@ public interface Book extends Genre {
 
 	default boolean bookDelete(int book_id) {
 		boolean flag = false;
-		String sql = "DELETE FROM `book` WHERE book_id = '" + book_id + "'";
+		String sql = "DELETE FROM `book` WHERE book_id = ?";
 		try {
 			Connection connection = DatabaseHelper.openConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, book_id);
 			preparedStatement.executeUpdate();
 			flag = true;
 		} catch (SQLIntegrityConstraintViolationException sd) {
@@ -43,6 +49,7 @@ public interface Book extends Genre {
 		catch (SQLException e) {
 //			e.printStackTrace();
 			log.error(e.getMessage());
+			System.out.println("Invalid Input");
 		} catch (Exception ex) {
 //				ex.printStackTrace();
 			log.error(ex.getMessage());
@@ -80,11 +87,15 @@ public interface Book extends Genre {
 
 				
 		} catch (SQLException e) {
-			log.error(e);
+			log.error(e.getMessage());
+			System.out.println("Invalid Input");
 
-		} catch (Exception ex) {
+		
+		}
+		catch (Exception ex) {
 			log.error(ex);
 		}
+		
 		return isBook;
 
 	}
@@ -102,6 +113,7 @@ public interface Book extends Genre {
 
 		} catch (SQLException e) {
 			log.error(e);
+			System.out.println("Invalid Input");
 
 		} catch (Exception ex) {
 			log.error(ex);
@@ -137,6 +149,7 @@ public interface Book extends Genre {
 
 		} catch (SQLException e) {
 			log.error(e);
+			System.out.println("Invalid Input");
 
 		} catch (Exception ex) {
 			log.error(ex);
@@ -148,14 +161,16 @@ public interface Book extends Genre {
 		boolean flag = false;
 		try {
 			Connection connection = DatabaseHelper.openConnection();
-			String sql = "update book set book_name='" + book_name + "' where book_id=" + book_id + "; ";
+			String sql = "update book set book_name=? where book_id=? ";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, book_name);
+			preparedStatement.setInt(2, book_id);
 			preparedStatement.executeUpdate();
 			flag = true;
 
 		} catch (SQLException e) {
 			log.error(e);
-
+			System.out.println("Invalid Input");
 		} catch (Exception ex) {
 			log.error(ex);
 		}
@@ -166,13 +181,16 @@ public interface Book extends Genre {
 		boolean flag = false;
 		try {
 			Connection connection = DatabaseHelper.openConnection();
-			String sql = "update book set book_isbn='" + book_isbn + "' where book_id=" + book_id + "; ";
+			String sql = "update book set book_isbn=? where book_id=? ";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, book_isbn);
+			preparedStatement.setInt(2, book_id);
 			preparedStatement.executeUpdate();
 			flag = true;
 
 		} catch (SQLException e) {
 			log.error(e);
+			System.out.println("Invalid Input");
 
 		} catch (Exception ex) {
 			log.error(ex);
@@ -184,13 +202,16 @@ public interface Book extends Genre {
 		boolean flag = false;
 		try {
 			Connection connection = DatabaseHelper.openConnection();
-			String sql = "update book set book_quantity=" + book_quantity + " where book_id=" + book_id + "; ";
+			String sql = "update book set book_quantity=? where book_id=? ";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, book_quantity);
+			preparedStatement.setInt(2, book_id);
 			preparedStatement.executeUpdate();
 			flag = true;
 
 		} catch (SQLException e) {
 			log.error(e);
+			System.out.println("Invalid Input");
 
 		} catch (Exception ex) {
 			log.error(ex);
@@ -202,13 +223,16 @@ public interface Book extends Genre {
 		boolean flag = false;
 		try {
 			Connection connection = DatabaseHelper.openConnection();
-			String sql = "update book set book_author='" + book_author + "' where book_id=" + book_id + "; ";
+			String sql = "update book set book_author=? where book_id=? ";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, book_author);
+			preparedStatement.setInt(2, book_id);
 			preparedStatement.executeUpdate();
 			flag = true;
 
 		} catch (SQLException e) {
 			log.error(e);
+			System.out.println("Invalid Input");
 
 		} catch (Exception ex) {
 			log.error(ex);
@@ -250,6 +274,7 @@ public interface Book extends Genre {
 
 	} catch (SQLException e) {
 		log.error(e);
+		System.out.println("Invalid Input");
 
 	} catch (Exception ex) {
 		log.error(ex);

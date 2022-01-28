@@ -19,15 +19,17 @@ public interface Genre {
 
 	default boolean genreAdd(String genre_type) {
 		boolean flag = false;
-		String sql = "insert into genre (genre_type) values('" + genre_type + "')";
+		String sql = "insert into genre (genre_type) values(?)";
 		try {
 			Connection connection = DatabaseHelper.openConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, genre_type);
 			preparedStatement.executeUpdate();
 			flag = true;
 		} catch (SQLException e) {
 //			e.printStackTrace();
 			log.error(e.getMessage());
+			System.out.println("Invalid Input");
 		} catch (Exception ex) {
 //				e.printStackTrace();
 			log.error(ex.getMessage());
@@ -37,15 +39,17 @@ public interface Genre {
 
 	default boolean genreDelete(int genre_id) {
 		boolean flag = false;
-		String sql = "DELETE FROM `genre` WHERE genre_id = '" + genre_id + "'";
+		String sql = "DELETE FROM `genre` WHERE genre_id = ?";
 		try {
 			Connection connection = DatabaseHelper.openConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, genre_id);
 			preparedStatement.executeUpdate();
 			flag = true;
 		} catch (SQLException e) {
 //			e.printStackTrace();
 			log.error(e.getMessage());
+			System.out.println("Invalid Input");
 		} catch (Exception ex) {
 //				e.printStackTrace();
 			log.error(ex.getMessage());
@@ -68,6 +72,7 @@ public interface Genre {
 		} catch (SQLException e) {
 //			e.printStackTrace();
 			log.error(e.getMessage());
+			System.out.println("Invalid Input");
 		} catch (Exception ex) {
 //				e.printStackTrace();
 			log.error(ex.getMessage());
@@ -96,6 +101,7 @@ public interface Genre {
 		} catch (SQLException e) {
 //			e.printStackTrace();
 			log.error(e.getMessage());
+			System.out.println("Invalid Input");
 		} catch (Exception ex) {
 //				e.printStackTrace();
 			log.error(ex.getMessage());
